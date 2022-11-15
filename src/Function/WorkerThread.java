@@ -30,7 +30,9 @@ public class WorkerThread extends Thread{
 			
 			if(request.equals("GET_PROCESS_LIST")) {
 				try {
-					Process list = Runtime.getRuntime().exec("tasklist");
+					String[] commandList = {"powershell.exe", "-Command", "Get-Process"};
+					ProcessBuilder processBuilder = new ProcessBuilder(commandList);
+					Process list = processBuilder.start();
 					BufferedReader processBuffer = new BufferedReader(new InputStreamReader(list.getInputStream()));
 					String processLine = "";
 					while((processLine = processBuffer.readLine()) != null) {
@@ -40,8 +42,20 @@ public class WorkerThread extends Thread{
 				} catch (Exception e) {
 					e.getStackTrace();
 				}
-			} else if(request.equals("CLOSE_PROCESS")) {
-				
+			} else if(request.equals("GET_APPLICATION_LIST")) {
+				try {
+					String[] commandList = {"powershell.exe", "-Command", "gps | ? {$_.mainwindowtitle} | select name, id, mainwindowtitle | ft -AutoSize"};
+					ProcessBuilder processBuilder = new ProcessBuilder(commandList);
+					Process list = processBuilder.start();
+					BufferedReader processBuffer = new BufferedReader(new InputStreamReader(list.getInputStream()));
+					String processLine = "";
+					while((processLine = processBuffer.readLine()) != null) {
+						System.out.println(processLine);
+					}
+					
+				} catch (Exception e) {
+					e.getStackTrace();
+				}
 			} 
 			
 		} catch (Exception e) {
