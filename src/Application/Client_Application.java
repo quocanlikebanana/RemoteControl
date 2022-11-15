@@ -72,7 +72,6 @@ public class Client_Application {
 					host = "";
 					JOptionPane.showMessageDialog(null, "error", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
 				}
-				
 			}
 		});
 		btnConnection.setBounds(453, 85, 85, 52);
