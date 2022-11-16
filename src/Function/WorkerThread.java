@@ -23,10 +23,10 @@ public class WorkerThread extends Thread{
 	public void run() {
 		try {
 			ObjectInputStream ois = new ObjectInputStream(inputStream);
+			ObjectOutputStream oos = new ObjectOutputStream(outputStream);
 			String request = (String) ois.readObject();
 			if(request.equals("GET_PROCESS_LIST")) {
 			try {
-				ObjectOutputStream oos = new ObjectOutputStream(outputStream);
 				String[] commandList = {"powershell.exe", "-Command", "Get-Process"};
 				ProcessBuilder processBuilder = new ProcessBuilder(commandList);
 				Process list = processBuilder.start();
@@ -49,11 +49,15 @@ public class WorkerThread extends Thread{
 				ProcessBuilder processBuilder = new ProcessBuilder(commandList);
 				Process list = processBuilder.start();
 				BufferedReader processBuffer = new BufferedReader(new InputStreamReader(list.getInputStream()));
-				String processLine = "";
-				while((processLine = processBuffer.readLine()) != null) {
-					System.out.println(processLine);
+				String data = "";
+				String line = "";
+				while((line = processBuffer.readLine()) != null) {
+					data += line + '\n';
 				}
-				
+				System.out.println(data);
+				oos.writeObject(data);
+	            ois.close();
+	            oos.close();
 			} catch (Exception e) {
 				e.getStackTrace();
 			}
