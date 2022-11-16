@@ -5,10 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import Function.Connection;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.net.Socket;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -61,12 +61,13 @@ public class Client_Application {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					host = inputIP.getText();
-					if(new Connection(host, 8080).serverSocket.isConnected()) {
+					Socket checkConnection= new Socket(host,8080);
+					if(checkConnection.isConnected()) {
 						Main_Window mainWindow = new Main_Window(host);
 						mainWindow.setVisible(true);
 						frame.dispose();
 					}
-					
+					checkConnection.close();					
 				} catch (Exception e2) {
 					// TODO: handle exception
 					host = "";

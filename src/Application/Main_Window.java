@@ -6,13 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Function.Connection;
+import Function.ProcessThread;
+
+//import Function.ProcessClass;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -23,8 +24,12 @@ public class Main_Window extends JFrame {
 	private String host = "";
 	private JPanel contentPane;
 	private JPanel Header = new JPanel();
-		
+	private	JPanel curPanel = null;
+	private int pageIndex = -1;
+			
 	public Main_Window(final String host) {
+		
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBackground(new Color(51,51,51));
 		setResizable(false);
@@ -37,8 +42,9 @@ public class Main_Window extends JFrame {
 		setContentPane(contentPane);
 		
 		
-		//Panel
+		ProcessThread processList = new ProcessThread(host, 8080, contentPane);
 		
+		//Panel
 		Header.setBounds(0, 0, 786, 51);
 		Header.setBackground(new Color(114,110,255));
 		contentPane.add(Header);
@@ -49,14 +55,6 @@ public class Main_Window extends JFrame {
 		nav.setBackground(new Color(55,70,91));
 		contentPane.add(nav);
 		nav.setLayout(new GridLayout(10, 1, 0, 0));
-		
-		JPanel show = new JPanel();
-		show.setBounds(153, 50, 633, 513);
-		contentPane.add(show);
-		show.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		
-		
-		
 		
 		//Button		
 		JButton btnNewButton_1 = new JButton("New button");
@@ -117,6 +115,25 @@ public class Main_Window extends JFrame {
 		nav.add(button);
 		
 		JButton btnProcess = new JButton("Get Process");
+		btnProcess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(pageIndex == -1) {
+					processList.run();
+					pageIndex = 4;
+				}else {
+					switch (pageIndex) {
+					case 4: {
+						processList.clear();
+						break;
+					}
+					default:
+						throw new IllegalArgumentException("Unexpected value: " + pageIndex);
+					}
+					processList.run();
+					pageIndex = 4;
+				}
+			}
+		});
 		btnProcess.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -129,18 +146,19 @@ public class Main_Window extends JFrame {
 				btnProcess.setForeground(Color.white);
 			}
 		});
+		
 		btnProcess.setFont(new Font("Arial", Font.PLAIN, 15));
 		btnProcess.setForeground(Color.WHITE);
 		btnProcess.setBorder(null);
 		btnProcess.setBackground(new Color(55,70,91));
 		btnProcess.setSize(getPreferredSize().width,100);
 		nav.add(btnProcess);
-		btnProcess.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Connection connection = new Connection(host, 8080);
-				connection.sendRequest("GET_PROCESS_LIST");
-			}
-		});
+		
+		
+	
+//		contentPane.add(textPane);
+		
+		
 		
 		
 	}
