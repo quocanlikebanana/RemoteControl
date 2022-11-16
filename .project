@@ -3,6 +3,7 @@
 	<name>RemoteControl_Server</name>
 	<comment></comment>
 	<projects>
+		<project>server</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
