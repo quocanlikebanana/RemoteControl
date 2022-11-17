@@ -18,6 +18,8 @@ import java.awt.GridLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JDesktopPane;
+import java.awt.BorderLayout;
 
 public class Main_Window extends JFrame {
 
@@ -55,6 +57,11 @@ public class Main_Window extends JFrame {
 		nav.setBackground(new Color(55,70,91));
 		contentPane.add(nav);
 		nav.setLayout(new GridLayout(10, 1, 0, 0));
+		
+		JDesktopPane desktopPane = new JDesktopPane();
+		desktopPane.setBounds(165, 61, 600, 457);
+		contentPane.add(desktopPane);
+		desktopPane.setLayout(new BorderLayout(0, 0));
 		
 		//Button		
 		JButton btnNewButton_1 = new JButton("New button");
@@ -117,21 +124,26 @@ public class Main_Window extends JFrame {
 		JButton btnProcess = new JButton("Get Process");
 		btnProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(pageIndex == -1) {
-					processList.run();
-					pageIndex = 4;
-				}else {
-					switch (pageIndex) {
-					case 4: {
-						processList.clear();
-						break;
-					}
-					default:
-						throw new IllegalArgumentException("Unexpected value: " + pageIndex);
-					}
-					processList.run();
-					pageIndex = 4;
-				}
+				ProcessFrame processFrame = new ProcessFrame();
+				
+				desktopPane.add(processFrame);
+				desktopPane.setDragMode(JDesktopPane.ABORT);
+			
+//				if(pageIndex == -1) {
+//					processList.run();
+//					pageIndex = 4;
+//				}else {
+//					switch (pageIndex) {
+//					case 4: {
+//						processList.clear();
+//						break;
+//					}
+//					default:
+//						throw new IllegalArgumentException("Unexpected value: " + pageIndex);
+//					}
+//					processList.run();
+//					pageIndex = 4;
+//				}
 			}
 		});
 		btnProcess.addMouseListener(new MouseAdapter() {
@@ -153,6 +165,8 @@ public class Main_Window extends JFrame {
 		btnProcess.setBackground(new Color(55,70,91));
 		btnProcess.setSize(getPreferredSize().width,100);
 		nav.add(btnProcess);
+		
+		
 		
 		
 	
