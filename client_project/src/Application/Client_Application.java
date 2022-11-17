@@ -20,9 +20,6 @@ public class Client_Application {
 	public JFrame frame;
 	public String host;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -36,16 +33,10 @@ public class Client_Application {
 		});
 	}
 	
-	/**
-	 * Create the application.
-	 */
 	public Client_Application() {
 		initialize();
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 600, 400);
@@ -57,6 +48,11 @@ public class Client_Application {
 		inputIP.setColumns(10);
 		
 		btnConnection = new JButton("Connect");
+		btnConnection.setBounds(453, 85, 85, 52);
+		frame.getContentPane().add(btnConnection);
+		frame.setLocationRelativeTo(null);
+		frame.setTitle("RemoteControl_Client");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		btnConnection.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -75,10 +71,5 @@ public class Client_Application {
 				}
 			}
 		});
-		btnConnection.setBounds(453, 85, 85, 52);
-		frame.getContentPane().add(btnConnection);
-		frame.setLocationRelativeTo(null);
-		frame.setTitle("RemoteControl_Client");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

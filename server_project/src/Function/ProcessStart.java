@@ -17,10 +17,9 @@ public class ProcessStart {
 		// TODO Auto-generated constructor stub
 		this.oos = oos;
 		this.file_name = file_name;
-
 		set_file_path();
 	}
-
+	
 	public void set_file_path() throws IOException {
 		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "dir \"\\" + this.file_name + "\"" + " /s");
 		pb.directory(new File("C:"));

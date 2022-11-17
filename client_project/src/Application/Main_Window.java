@@ -127,25 +127,8 @@ public class Main_Window extends JFrame {
 		JButton btnProcess = new JButton("Get Process");
 		btnProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				desktopPane.removeAll();
 				desktopPane.add(new ProcessTab(host));
-				
-//				if(pageIndex == -1) {
-//					processList.run();
-//					pageIndex = 4;
-//				}else {
-//					switch (pageIndex) {
-//					case 4: {
-//						processList.clear();
-//						break;
-//					}
-//					default:
-//						throw new IllegalArgumentException("Unexpected value: " + pageIndex);
-//					}
-//					processList.run();
-//					pageIndex = 4;
-//				}
 			}
 		});
 		btnProcess.addMouseListener(new MouseAdapter() {
