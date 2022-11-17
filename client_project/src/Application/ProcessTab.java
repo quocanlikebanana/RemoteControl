@@ -7,16 +7,24 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import Process.ListProcess;
+import Process.ProcessKill;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
 
 public class ProcessTab extends JInternalFrame {
 	private String host = "";
 	private int port;
+	private JTextField killPID;
+	private JTextField startPID;
 	
 	public ProcessTab(String host,int port) {
 		this.host = host;
@@ -67,10 +75,44 @@ public class ProcessTab extends JInternalFrame {
 		JButton btnKillProcess = new JButton("KILL PROCESS");
 		btnKillProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ProcessKill processKill;
+				try {
+					processKill = new ProcessKill(host, port);
+					processKill.sendRequest(killPID.getText());
+					String status = (String) processKill.getResponseData();
+					JOptionPane.showMessageDialog(null, status , "" , JOptionPane.INFORMATION_MESSAGE);
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 		btnKillProcess.setBounds(10, 43, 160, 21);
 		getContentPane().add(btnKillProcess);
+		
+		killPID = new JTextField();
+		killPID.setBounds(294, 43, 208, 19);
+		getContentPane().add(killPID);
+		killPID.setColumns(10);
+		
+		startPID = new JTextField();
+		startPID.setBounds(294, 74, 208, 19);
+		getContentPane().add(startPID);
+		startPID.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Kill pID:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setBounds(207, 41, 77, 21);
+		getContentPane().add(lblNewLabel);
+		
+		JLabel lblStartPid = new JLabel("Start pID:");
+		lblStartPid.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblStartPid.setBounds(207, 72, 77, 21);
+		getContentPane().add(lblStartPid);
 		
 	
 

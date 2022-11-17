@@ -30,8 +30,7 @@ public class WorkerThread extends Thread {
 			ObjectOutputStream oos = new ObjectOutputStream(outputStream);
 			ObjectInputStream ois = new ObjectInputStream(inputStream);
 
-			String request = (String) ois.readObject();
-			String[] request_elements = request.split(" ");
+			String request = (String) ois.readObject();		
 			// gui request nhu sau: "KILL_PROCESS 12312"
 			// gui request nhu sau: "START_PROCESS pornhub.exe"
 
@@ -39,11 +38,14 @@ public class WorkerThread extends Thread {
 				ListProcess listProcess = new ListProcess(oos);
 				listProcess.set_listProcess();
 				listProcess.sendListProcess();
-			} else if (request.equals("KILL_PROCESS")) {
+			} else if (request.contains("KILL_PROCESS")) {
+				System.out.println(request);
+				String[] request_elements = request.split(" ");
 				ProcessKill processKill = new ProcessKill(oos, request_elements[1]);
 				processKill.kill();
 				processKill.send_result();
-			} else if (request.equals("START_PROCESS")) {
+			} else if (request.contains("START_PROCESS")) {
+				String[] request_elements = request.split(" ");
 				ProcessStart processStart = new ProcessStart(oos, request_elements[1]);
 				processStart.start_file();
 				processStart.send_result();
