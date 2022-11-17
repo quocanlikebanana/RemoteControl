@@ -35,6 +35,7 @@ public class WorkerThread extends Thread {
 			// gui request nhu sau: "START_PROCESS pornhub.exe"
 
 			if (request.equals("GET_PROCESS_LIST")) {
+				System.out.println(request);
 				ListProcess listProcess = new ListProcess(oos);
 				listProcess.set_listProcess();
 				listProcess.sendListProcess();

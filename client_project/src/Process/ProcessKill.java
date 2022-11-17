@@ -18,7 +18,8 @@ public class ProcessKill {
 	}
 	
 	public void sendRequest(String pID) throws IOException {
-		oos.writeObject("KILL_PROCESS " + pID);
+		String request = "KILL_PROCESS " + pID;
+		oos.writeObject(request);
 		oos.flush();
 	}
 	
