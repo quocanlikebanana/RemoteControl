@@ -13,11 +13,13 @@ import Function.ProcessThread;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JDesktopPane;
 
 public class Main_Window extends JFrame {
 
@@ -26,6 +28,7 @@ public class Main_Window extends JFrame {
 	private JPanel Header = new JPanel();
 	private	JPanel curPanel = null;
 	private int pageIndex = -1;
+	private final JDesktopPane desktopPane = new JDesktopPane();
 			
 	public Main_Window(final String host) {
 		
@@ -42,7 +45,7 @@ public class Main_Window extends JFrame {
 		setContentPane(contentPane);
 		
 		
-		ProcessThread processList = new ProcessThread(host, 8080, contentPane);
+//		ProcessThread processList = new ProcessThread(host, 8080, contentPane);
 		
 		//Panel
 		Header.setBounds(0, 0, 786, 51);
@@ -55,6 +58,13 @@ public class Main_Window extends JFrame {
 		nav.setBackground(new Color(55,70,91));
 		contentPane.add(nav);
 		nav.setLayout(new GridLayout(10, 1, 0, 0));
+		
+		desktopPane.setBounds(154, 50, 632, 513);
+		desktopPane.setLayout(new BorderLayout(0,0));
+		desktopPane.setDragMode(ABORT);
+		contentPane.add(desktopPane);
+		
+		
 		
 		//Button		
 		JButton btnNewButton_1 = new JButton("New button");
@@ -117,21 +127,25 @@ public class Main_Window extends JFrame {
 		JButton btnProcess = new JButton("Get Process");
 		btnProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(pageIndex == -1) {
-					processList.run();
-					pageIndex = 4;
-				}else {
-					switch (pageIndex) {
-					case 4: {
-						processList.clear();
-						break;
-					}
-					default:
-						throw new IllegalArgumentException("Unexpected value: " + pageIndex);
-					}
-					processList.run();
-					pageIndex = 4;
-				}
+				
+				desktopPane.removeAll();
+				desktopPane.add(new ProcessTab(host));
+				
+//				if(pageIndex == -1) {
+//					processList.run();
+//					pageIndex = 4;
+//				}else {
+//					switch (pageIndex) {
+//					case 4: {
+//						processList.clear();
+//						break;
+//					}
+//					default:
+//						throw new IllegalArgumentException("Unexpected value: " + pageIndex);
+//					}
+//					processList.run();
+//					pageIndex = 4;
+//				}
 			}
 		});
 		btnProcess.addMouseListener(new MouseAdapter() {
