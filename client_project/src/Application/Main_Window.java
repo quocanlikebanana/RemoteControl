@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Function.ProcessThread;
+
 
 //import Function.ProcessClass;
 
@@ -24,19 +24,21 @@ import javax.swing.JDesktopPane;
 public class Main_Window extends JFrame {
 
 	private String host = "";
+	private int port;
 	private JPanel contentPane;
 	private JPanel Header = new JPanel();
 	private	JPanel curPanel = null;
 	private int pageIndex = -1;
 	private final JDesktopPane desktopPane = new JDesktopPane();
 			
-	public Main_Window(final String host) {
+	public Main_Window(final String host,int port) {
 		
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBackground(new Color(51,51,51));
 		setResizable(false);
 		this.host = host;
+		this.port = port;
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		setLocationRelativeTo(null);
@@ -127,8 +129,9 @@ public class Main_Window extends JFrame {
 		JButton btnProcess = new JButton("Get Process");
 		btnProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ProcessTab processTab = new ProcessTab(host,port);
 				desktopPane.removeAll();
-				desktopPane.add(new ProcessTab(host));
+				desktopPane.add(processTab);
 			}
 		});
 		btnProcess.addMouseListener(new MouseAdapter() {

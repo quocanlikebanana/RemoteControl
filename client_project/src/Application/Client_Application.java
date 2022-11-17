@@ -19,6 +19,7 @@ public class Client_Application {
 	
 	public JFrame frame;
 	public String host;
+	public int port = 8080;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -59,7 +60,7 @@ public class Client_Application {
 					host = inputIP.getText();
 					Socket checkConnection= new Socket(host,8080);
 					if(checkConnection.isConnected()) {
-						Main_Window mainWindow = new Main_Window(host);
+						Main_Window mainWindow = new Main_Window(host,port);
 						mainWindow.setVisible(true);
 						frame.dispose();
 					}
