@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 
 import Process.ListProcess;
 import Process.ProcessKill;
+import Process.ProcessStart;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -24,7 +25,7 @@ public class ProcessTab extends JInternalFrame {
 	private String host = "";
 	private int port;
 	private JTextField killPID;
-	private JTextField startPID;
+	private JTextField startName;
 	
 	public ProcessTab(String host,int port) {
 		this.host = host;
@@ -47,6 +48,17 @@ public class ProcessTab extends JInternalFrame {
 		JButton btnStartProcess = new JButton("START PROCESS");
 		btnStartProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					String status = "Please innput Process Name...";
+					if(!startName.getText().isEmpty()) {
+						ProcessStart processStart = new ProcessStart(host, port);
+						processStart.sendRequest(startName.getText());
+						status = (String) processStart.getResponseData();
+					}
+					JOptionPane.showMessageDialog(null, status , "" , JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
 			}
 		});
 		btnStartProcess.setBounds(10, 74, 160, 21);
@@ -97,10 +109,10 @@ public class ProcessTab extends JInternalFrame {
 		getContentPane().add(killPID);
 		killPID.setColumns(10);
 		
-		startPID = new JTextField();
-		startPID.setBounds(342, 74, 208, 19);
-		getContentPane().add(startPID);
-		startPID.setColumns(10);
+		startName = new JTextField();
+		startName.setBounds(342, 74, 208, 19);
+		getContentPane().add(startName);
+		startName.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Kill pID:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));

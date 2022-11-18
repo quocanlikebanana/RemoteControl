@@ -34,7 +34,7 @@ public class ProcessKill {
 			return ois.readObject();
 		} catch (Exception e) {
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(null, "The system cannot find the path specified." , "" , JOptionPane.INFORMATION_MESSAGE);
+			e.getStackTrace();
 		}
 		return null;
 	}
