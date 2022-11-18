@@ -18,13 +18,25 @@ public class ProcessKill {
 	}
 
 	public void kill() throws IOException {
-		String commandLine = "taskkill /PID " + this.pID;
-	    Process p = Runtime.getRuntime().exec(commandLine);
-	    BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-	    this.res = input.readLine();
-	    if(this.res.isEmpty()) {
-	    	this.res = "The system cannot find the path specified.";
-	    }
+		
+		String processList = "";
+		String[] commandList = { "powershell.exe", "-Command", "Get-Process" };
+		ProcessBuilder processBuilder = new ProcessBuilder(commandList);
+		Process list = processBuilder.start();
+		BufferedReader processBuffer = new BufferedReader(new InputStreamReader(list.getInputStream()));
+		String processLine = "";
+		while ((processLine = processBuffer.readLine()) != null) {
+			processList += processLine + '\n';
+		}
+		
+		if(processList.contains(this.pID)) {
+			String commandLine = "taskkill /PID " + this.pID;
+		    Process p = Runtime.getRuntime().exec(commandLine);
+		    BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		    this.res = input.readLine();
+		} else {
+			this.res = "Wrong pID!";
+		}
 	}
 
 	public void send_result() throws IOException {

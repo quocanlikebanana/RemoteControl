@@ -76,7 +76,7 @@ public class ProcessTab extends JInternalFrame {
 		btnKillProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String status = "The system cannot find the path specified.";
+					String status = "Please input pID...";
 					if(!killPID.getText().isEmpty()) {
 						ProcessKill processKill = new ProcessKill(host, port);
 						processKill.sendRequest(killPID.getText());
@@ -84,12 +84,7 @@ public class ProcessTab extends JInternalFrame {
 					}
 					JOptionPane.showMessageDialog(null, status , "" , JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e2.getStackTrace();
 				}
 				
 			}

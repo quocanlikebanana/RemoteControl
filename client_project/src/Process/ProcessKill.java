@@ -6,6 +6,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.swing.JOptionPane;
+
 public class ProcessKill {
 	private Socket socket =  null;
 	private ObjectInputStream ois = null;
@@ -17,13 +19,23 @@ public class ProcessKill {
 		this.oos = new ObjectOutputStream(socket.getOutputStream());	
 	}
 	
-	public void sendRequest(String pID) throws IOException {
-		String request = "KILL_PROCESS " + pID;
-		oos.writeObject(request);
-		oos.flush();
+	public void sendRequest(String pID) {
+		try {
+			String request = "KILL_PROCESS " + pID;
+			oos.writeObject(request);
+			oos.flush();
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
 	}
 	
-	public Object getResponseData() throws ClassNotFoundException, IOException {
-		return ois.readObject();
+	public Object getResponseData()  {
+		try {
+			return ois.readObject();
+		} catch (Exception e) {
+			// TODO: handle exception
+			JOptionPane.showMessageDialog(null, "The system cannot find the path specified." , "" , JOptionPane.INFORMATION_MESSAGE);
+		}
+		return null;
 	}
 }
