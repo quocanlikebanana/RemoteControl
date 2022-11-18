@@ -107,10 +107,10 @@ public class ProcessTab extends JInternalFrame {
 		lblNewLabel.setBounds(207, 41, 77, 21);
 		getContentPane().add(lblNewLabel);
 		
-		JLabel lblStartPid = new JLabel("Process Name:");
-		lblStartPid.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblStartPid.setBounds(207, 72, 114, 21);
-		getContentPane().add(lblStartPid);
+		JLabel lblStartName = new JLabel("Process Name:");
+		lblStartName.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblStartName.setBounds(207, 72, 114, 21);
+		getContentPane().add(lblStartName);
 		
 	
 
