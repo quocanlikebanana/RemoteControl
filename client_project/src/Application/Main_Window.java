@@ -88,45 +88,60 @@ public class Main_Window extends JFrame {
 		btnNewButton_1.setBorder(null);
 		nav.add(btnNewButton_1);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addMouseListener(new MouseAdapter() {
+		JButton btnScreenCapture = new JButton("Screen Capture");
+		btnScreenCapture.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScreeCaptureTab screeCaptureTab = new ScreeCaptureTab(host, port);
+				desktopPane.removeAll();
+				desktopPane.add(screeCaptureTab);
+			}
+		});
+		btnScreenCapture.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnNewButton.setBackground(new Color(112, 235, 237));
-				btnNewButton.setForeground(Color.black);
+				btnScreenCapture.setBackground(new Color(112, 235, 237));
+				btnScreenCapture.setForeground(Color.black);
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnNewButton.setBackground(nav.getBackground());
-				btnNewButton.setForeground(Color.white);
+				btnScreenCapture.setBackground(nav.getBackground());
+				btnScreenCapture.setForeground(Color.white);
 			}
 		});
-		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnNewButton.setForeground(Color.WHITE);
-		btnNewButton.setBackground(new Color(55,70,91));
-		btnNewButton.setBorder(null);
-		nav.add(btnNewButton);
+		btnScreenCapture.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnScreenCapture.setForeground(Color.WHITE);
+		btnScreenCapture.setBackground(new Color(55,70,91));
+		btnScreenCapture.setBorder(null);
+		nav.add(btnScreenCapture);
 		
-		JButton button = new JButton("New button");
-		button.addMouseListener(new MouseAdapter() {
+		JButton btnKeyLogger = new JButton("Key Logger");
+		btnKeyLogger.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				KeyLoggerTab keyLoggerTab = new KeyLoggerTab(host, port);
+				desktopPane.removeAll();
+				desktopPane.add(keyLoggerTab);
+				
+			}
+		});
+		btnKeyLogger.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				button.setBackground(new Color(112, 235, 237));
-				button.setForeground(Color.black);
+				btnKeyLogger.setBackground(new Color(112, 235, 237));
+				btnKeyLogger.setForeground(Color.black);
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				button.setBackground(nav.getBackground());
-				button.setForeground(Color.white);
+				btnKeyLogger.setBackground(nav.getBackground());
+				btnKeyLogger.setForeground(Color.white);
 			}
 		});
-		button.setFont(new Font("Arial", Font.PLAIN, 15));
-		button.setForeground(Color.WHITE);
-		button.setBorder(null);
-		button.setBackground(new Color(55,70,91));
-		nav.add(button);
+		btnKeyLogger.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnKeyLogger.setForeground(Color.WHITE);
+		btnKeyLogger.setBorder(null);
+		btnKeyLogger.setBackground(new Color(55,70,91));
+		nav.add(btnKeyLogger);
 		
-		JButton btnProcess = new JButton("Get Process");
+		JButton btnProcess = new JButton("Process");
 		btnProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ProcessTab processTab = new ProcessTab(host,port);

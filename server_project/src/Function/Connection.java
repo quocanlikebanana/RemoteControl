@@ -3,11 +3,12 @@ package Function;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import KeyLogger.KeyLogger;
+
 public class Connection {
 	private static ServerSocket server = null;
 	private static int port = 8080;
-	private static final int LINGER_TIME = 5000;
-	
+	private static final int LINGER_TIME = 5000;	
 	public static void main(String[] arg) {
 		try {
 			System.out.println("Watting");
