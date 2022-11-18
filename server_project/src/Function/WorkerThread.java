@@ -36,9 +36,6 @@ public class WorkerThread extends Thread {
 
 			String request = (String) ois.readObject();	
 			String[] request_elements = request.split(" ");
-			// gui request nhu sau: "KILL_PROCESS 12312"
-			// gui request nhu sau: "START_PROCESS pornhub.exe"
-
 			if (request.equals("GET_PROCESS_LIST")) {
 				System.out.println(request);
 				ListProcess listProcess = new ListProcess(oos);

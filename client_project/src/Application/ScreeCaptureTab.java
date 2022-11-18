@@ -32,6 +32,7 @@ public class ScreeCaptureTab extends JInternalFrame {
 	private String host = "";
 	private int port;
 	private BufferedImage bImage2 = null;
+	
 	public ScreeCaptureTab(String host,int port) {
 		this.host = host;
 		this.port = port;
@@ -43,8 +44,12 @@ public class ScreeCaptureTab extends JInternalFrame {
 		getContentPane().setLayout(null);
 		setVisible(true);
 		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(35, 94, 527, 254);
+//		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Admin\\Desktop\\GIT_DOAN\\dev\\RemoteControl\\client_project\\output.jpg"));
+		getContentPane().add(lblNewLabel);
 		
-	
+		
 		JButton btnScreenCap = new JButton("Screnn Capture");
 		btnScreenCap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -55,34 +60,43 @@ public class ScreeCaptureTab extends JInternalFrame {
 					System.out.println(data);
 					ByteArrayInputStream bis = new ByteArrayInputStream(data);
 				    bImage2 = ImageIO.read(bis);
-					
-				    
-//				    ImageIcon image = new ImageIcon(bImage2);
-				    
+				    lblNewLabel.setIcon(new ImageIcon(bImage2.getScaledInstance(527, 254, 100)));
+				    ImageIO.write(bImage2, "jpg", new File("output.jpg") );
 			
 				} catch (Exception e2) {
 					// TODO: handle exception
+					e2.getStackTrace();
 				}
 				
 				
 			}
 		});
+		
+		
 		btnScreenCap.setBounds(50, 40, 139, 34);
 		getContentPane().add(btnScreenCap);
 		
-		JButton btnNewButton_1 = new JButton("New button");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnDownload = new JButton("Download");
+		btnDownload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ImageIO.write(bImage2, "jpg", new File("output.jpg") );
+					JOptionPane.showMessageDialog(null, "Success!" , "" , JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Fail!" , "" , JOptionPane.INFORMATION_MESSAGE);
 				}
+				
+		
 			}
 		});
-		btnNewButton_1.setBounds(271, 40, 139, 34);
-		getContentPane().add(btnNewButton_1);
+		
+		
+		btnDownload.setBounds(271, 40, 139, 34);
+		getContentPane().add(btnDownload);
+		
+		
 		
 		
 		
