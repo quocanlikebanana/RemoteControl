@@ -93,12 +93,12 @@ public class ProcessTab extends JInternalFrame {
 		getContentPane().add(btnKillProcess);
 		
 		killPID = new JTextField();
-		killPID.setBounds(294, 43, 208, 19);
+		killPID.setBounds(342, 43, 208, 19);
 		getContentPane().add(killPID);
 		killPID.setColumns(10);
 		
 		startPID = new JTextField();
-		startPID.setBounds(294, 74, 208, 19);
+		startPID.setBounds(342, 74, 208, 19);
 		getContentPane().add(startPID);
 		startPID.setColumns(10);
 		
@@ -107,9 +107,9 @@ public class ProcessTab extends JInternalFrame {
 		lblNewLabel.setBounds(207, 41, 77, 21);
 		getContentPane().add(lblNewLabel);
 		
-		JLabel lblStartPid = new JLabel("Start pID:");
+		JLabel lblStartPid = new JLabel("Process Name:");
 		lblStartPid.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblStartPid.setBounds(207, 72, 77, 21);
+		lblStartPid.setBounds(207, 72, 114, 21);
 		getContentPane().add(lblStartPid);
 		
 	
