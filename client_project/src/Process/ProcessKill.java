@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
+import Protocols.protocol;
 
 public class ProcessKill {
 	private Socket socket =  null;

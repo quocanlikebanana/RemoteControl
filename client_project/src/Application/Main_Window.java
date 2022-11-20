@@ -91,7 +91,7 @@ public class Main_Window extends JFrame {
 		JButton btnScreenCapture = new JButton("Screen Capture");
 		btnScreenCapture.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScreeCaptureTab screeCaptureTab = new ScreeCaptureTab(host, port);
+				ScreenCaptureTab screeCaptureTab = new ScreenCaptureTab(host, port);
 				desktopPane.removeAll();
 				desktopPane.add(screeCaptureTab);
 			}
