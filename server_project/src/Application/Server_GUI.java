@@ -4,32 +4,38 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
-import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import java.awt.Cursor;
-import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableModel;
+
+import Function.ConnectionThread;
+
 import java.awt.SystemColor;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.SpringLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JList;
-import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.JScrollPane;
+import java.awt.Dimension;
 
 public class Server_GUI {
 
 	private JFrame frmServer;
-	private JTextField ipTxF;
 	private JButton openBtn;
 	private JButton closeBtn;
-	
+	private ConnectionThread con;
+	private JTable actTable;
+	private JList<String> ipList;
+	private DefaultListModel<String> ipListModel;
+	private DefaultTableModel actModel;
+	private JScrollPane actionTableScrollPane;
+
 	/**
 	 * Launch the application.
 	 */
@@ -51,7 +57,8 @@ public class Server_GUI {
 	 */
 	public Server_GUI() {
 		initialize();
-		AnNgoAddOns();
+		postInitializeSettings();
+
 	}
 
 	/**
@@ -63,29 +70,32 @@ public class Server_GUI {
 		frmServer.setTitle("Server");
 		frmServer.setAlwaysOnTop(true);
 		frmServer.setResizable(false);
-		frmServer.setBounds(100, 100, 542, 238);
+		frmServer.setBounds(100, 100, 544, 416);
 		frmServer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmServer.getContentPane().setLayout(null);
 		frmServer.getContentPane().setLayout(null);
-		
+
 		openBtn = new JButton("Open Server");
 		openBtn.setBounds(10, 10, 130, 40);
 		frmServer.getContentPane().add(openBtn);
 		openBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		openBtn.addActionListener(new ActionListener() {
+			// OPEN Connection
 			public void actionPerformed(ActionEvent e) {
+				con = new ConnectionThread();
+				con.start();
+				
 				openBtn.setVisible(false);
 				openBtn.setEnabled(false);
 				closeBtn.setVisible(true);
 				closeBtn.setEnabled(true);
-				ipTxF.setText("Anybody there...?");
 			}
 		});
 		openBtn.setForeground(Color.WHITE);
 		openBtn.setFont(new Font("Arial", Font.BOLD, 14));
 		openBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		openBtn.setBackground(new Color(0, 102, 51));
-		
+
 		closeBtn = new JButton("Close Server");
 		closeBtn.setBounds(10, 10, 130, 40);
 		frmServer.getContentPane().add(closeBtn);
@@ -96,54 +106,82 @@ public class Server_GUI {
 				openBtn.setEnabled(true);
 				closeBtn.setVisible(false);
 				closeBtn.setEnabled(false);
-				ipTxF.setText("None");
+
+				con.stopConnection();
 			}
 		});
 		closeBtn.setForeground(Color.WHITE);
 		closeBtn.setFont(new Font("Arial", Font.BOLD, 14));
 		closeBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		closeBtn.setBackground(new Color(153, 0, 0));
-		
+
 		JLabel lblNewLabel = new JLabel("Connected to:");
 		lblNewLabel.setFont(new Font("Cascadia Code", Font.BOLD, 14));
-		lblNewLabel.setBounds(170, 10, 120, 33);
+		lblNewLabel.setBounds(163, 14, 120, 33);
 		frmServer.getContentPane().add(lblNewLabel);
-		
+
 		JLabel lblActions = new JLabel("Actions:");
 		lblActions.setFont(new Font("Arial", Font.BOLD, 14));
-		lblActions.setBounds(73, 75, 67, 33);
+		lblActions.setBounds(10, 155, 73, 33);
 		frmServer.getContentPane().add(lblActions);
-		
-		ipTxF = new JTextField();
-		ipTxF.setText("None");
-		ipTxF.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
-		ipTxF.setEditable(false);
-		ipTxF.setColumns(10);
-		ipTxF.setBounds(300, 10, 192, 33);
-		frmServer.getContentPane().add(ipTxF);
-		
+
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 60, 524, 5);
+		panel_1.setBounds(0, 129, 527, 5);
 		frmServer.getContentPane().add(panel_1);
-		panel_1.setBackground(new Color(55,70,91));
-		
-		JList list = new JList();
-		list.setFont(new Font("Arial", Font.PLAIN, 14));
-		list.setBounds(170, 82, 322, 103);
-		frmServer.getContentPane().add(list);
-		
+		panel_1.setBackground(new Color(55, 70, 91));
+
+		JScrollPane listIpScrollPane = new JScrollPane();
+		listIpScrollPane.setPreferredSize(new Dimension(250, 80));
+		listIpScrollPane.setBounds(293, 10, 190, 95);
+		frmServer.getContentPane().add(listIpScrollPane);
+
+		ipList = new JList<String>();
+		ipList.setVisibleRowCount(4);
+		ipList.setSelectionBackground(SystemColor.activeCaptionBorder);
+		listIpScrollPane.setViewportView(ipList);
+
+		actionTableScrollPane = new JScrollPane();
+		actionTableScrollPane.setBounds(20, 189, 463, 146);
+		frmServer.getContentPane().add(actionTableScrollPane);
+
+		actTable = new JTable();
+		actionTableScrollPane.setViewportView(actTable);
+		actTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
 	}
-	
-	/* An Ngo's add-ons */
-	private void AnNgoAddOns() {
-		ipTxF.setText("None");
-		
+
+	private void postInitializeSettings() {
+
 		// Remove blue line wrap the text inside buttons
 		openBtn.setFocusPainted(false);
 		closeBtn.setFocusPainted(false);
-		
+
 		// By default
 		closeBtn.setEnabled(false);
+
+		ipListModel = new DefaultListModel<String>();
+		ipList.setModel(ipListModel);
+
+		actModel = new DefaultTableModel(new Object[][] {}, new String[] { "IP", "Action" });
+		actTable.setModel(actModel);
+		actTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		actTable.getColumnModel().getColumn(1).setMinWidth(250);
+		actTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+	}
+
+	public void addToIpList(String ip) {
+		this.ipListModel.addElement(ip);
+	}
+
+	public void removeFromIpList(String ip) {
+		int id = this.ipListModel.indexOf(ip);
+		if (id == -1)
+			return;
+		this.ipListModel.remove(id);
+	}
+
+	public void actionRecorded(String ip, String act) {
+		this.actModel.addRow(new Object[] {ip, act});
 	}
 	
 }

@@ -9,13 +9,13 @@ import process.ProcessStart;
 
 import java.io.*;
 
-public class WorkerThread extends Thread {
+public class ClientThread extends Thread {
 	private InputStream inputStream = null;
 	private OutputStream outputStream = null;
 	private Socket clientSocket = null;
 	private String record = "";
 
-	public WorkerThread(Socket clientSocket) {
+	public ClientThread(Socket clientSocket) {
 		try {
 			this.clientSocket = clientSocket;
 			this.inputStream = clientSocket.getInputStream();
@@ -36,19 +36,27 @@ public class WorkerThread extends Thread {
 			String[] request_elements = request.split(" ");
 
 			if (request.equals("GET_PROCESS_LIST")) {
-				System.out.println(request);
+				
+				
+				
 				ListProcess listProcess = new ListProcess(oos);
 				listProcess.set_listProcess();
 				listProcess.sendListProcess();
 			}
 
 			else if (request_elements[0].equals("KILL_PROCESS")) {
+				
+				
+				
 				ProcessKill processKill = new ProcessKill(oos, request_elements[1]);
 				processKill.kill();
 				processKill.send_result();
 			}
 
 			else if (request_elements[0].equals("START_PROCESS")) {
+				
+				
+				
 				ProcessStart processStart = new ProcessStart(oos, request_elements[1]);
 				processStart.start_file();
 				processStart.send_result();
@@ -63,10 +71,16 @@ public class WorkerThread extends Thread {
 //			} 
 			
 			else if (request.equals("SCREEN_CAPTURE")) {
+				
 				System.out.println(request);
+				
 				ScreenCapture screenCapture = new ScreenCapture(oos);
 				screenCapture.get_Screenshot();
 				screenCapture.send_ScreenShot();
+			}
+			
+			else {
+				throw new Exception();
 			}
 			
 			oos.close();
