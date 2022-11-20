@@ -18,22 +18,33 @@ public class ConnectionThread extends Thread {
 	private static final int PORT = 8080;
 	private static final int LINGER_TIME = 5000;
 
+	public Server_GUI main;
+
 	// Flag
 	private volatile boolean exit = false;
 
-	public ConnectionThread() {
+	public ConnectionThread(Server_GUI m) {
 		this.server = null;
 		this.client = null;
 		this.ConnectionState = state.UNCONNECTED;
 		this.exit = false;
+		this.main = m;
 	}
 
-	public state getConnectionState() {
-		return this.ConnectionState;
+	public String getIp() {
+		if (this.ConnectionState == state.CONNECTED) {
+			return this.client.getInetAddress().toString().substring(1);
+		}
+		return null;
 	}
 
 	public void stopConnection() {
 		this.exit = true;
+		try {
+			this.server.close();
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
 	}
 
 	@Override
@@ -49,17 +60,13 @@ public class ConnectionThread extends Thread {
 			while (!exit) {
 				client = server.accept();
 				client.setSoLinger(true, LINGER_TIME);
+				main.addToIpList(this.getIp());
 
-				ClientThread woker = new ClientThread(client);
+				ClientThread woker = new ClientThread(client, main);
 				woker.start();
 			}
 		} catch (Exception e) {
 			e.getStackTrace();
-		}
-		try {
-			server.close();
-		} catch (Exception e2) {
-			e2.getStackTrace();
 		}
 	}
 

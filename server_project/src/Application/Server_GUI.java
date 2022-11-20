@@ -25,7 +25,6 @@ import javax.swing.JScrollPane;
 import java.awt.Dimension;
 
 public class Server_GUI {
-
 	private JFrame frmServer;
 	private JButton openBtn;
 	private JButton closeBtn;
@@ -35,6 +34,12 @@ public class Server_GUI {
 	private DefaultListModel<String> ipListModel;
 	private DefaultTableModel actModel;
 	private JScrollPane actionTableScrollPane;
+
+	public Server_GUI self = this;
+
+	public Server_GUI getSelf() {
+		return this;
+	}
 
 	/**
 	 * Launch the application.
@@ -59,6 +64,7 @@ public class Server_GUI {
 		initialize();
 		postInitializeSettings();
 
+		/* Testing Area */
 	}
 
 	/**
@@ -82,9 +88,9 @@ public class Server_GUI {
 		openBtn.addActionListener(new ActionListener() {
 			// OPEN Connection
 			public void actionPerformed(ActionEvent e) {
-				con = new ConnectionThread();
+				con = new ConnectionThread(self);
 				con.start();
-				
+
 				openBtn.setVisible(false);
 				openBtn.setEnabled(false);
 				closeBtn.setVisible(true);
@@ -115,7 +121,7 @@ public class Server_GUI {
 		closeBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		closeBtn.setBackground(new Color(153, 0, 0));
 
-		JLabel lblNewLabel = new JLabel("Connected to:");
+		JLabel lblNewLabel = new JLabel("Clients:");
 		lblNewLabel.setFont(new Font("Cascadia Code", Font.BOLD, 14));
 		lblNewLabel.setBounds(163, 14, 120, 33);
 		frmServer.getContentPane().add(lblNewLabel);
@@ -162,7 +168,18 @@ public class Server_GUI {
 		ipListModel = new DefaultListModel<String>();
 		ipList.setModel(ipListModel);
 
-		actModel = new DefaultTableModel(new Object[][] {}, new String[] { "IP", "Action" });
+		actModel = new DefaultTableModel(new Object[][] {}, new String[] { "IP", "Action" }) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				actTable.setFocusable(false);
+				return false;
+			}
+		};
+
 		actTable.setModel(actModel);
 		actTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		actTable.getColumnModel().getColumn(1).setMinWidth(250);
@@ -181,7 +198,8 @@ public class Server_GUI {
 	}
 
 	public void actionRecorded(String ip, String act) {
-		this.actModel.addRow(new Object[] {ip, act});
+		this.actModel.addRow(new Object[] { ip, act });
+		this.actTable.repaint();
 	}
-	
+
 }

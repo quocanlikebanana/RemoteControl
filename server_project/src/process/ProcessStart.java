@@ -38,14 +38,16 @@ public class ProcessStart {
 		br.close();
 	}
 
-	public void start_file() throws IOException {
+	public boolean start_file() throws IOException {
 		if (this.is_exist == true) {
 			ProcessBuilder pb = new ProcessBuilder("cmd", "/c", this.file_name);
 			pb.directory(new File(this.file_path));
 			pb.start();
 			this.res = "Start Process Successfully!";
+			return true;
 		} else {
 			this.res = "The file is not exist!";
+			return false;
 		}
 	}
 

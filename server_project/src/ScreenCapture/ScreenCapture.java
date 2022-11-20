@@ -22,7 +22,7 @@ public class ScreenCapture {
 		this.oos = oos;
 	}
 
-	public void get_Screenshot() throws IOException, AWTException {
+	public boolean get_Screenshot() throws IOException, AWTException {
 		String path = "D:\\sc.jpg";
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		Rectangle rectangle = new Rectangle(dimension);
@@ -40,8 +40,10 @@ public class ScreenCapture {
 		ImageIO.write(bImage, "jpg", bos);
 
 		data = bos.toByteArray();
-		System.out.println(data);
-
+		if (data == null) {
+			return false;
+		}
+		return true;
 	}
 
 	public void send_ScreenShot() throws IOException {

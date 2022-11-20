@@ -17,8 +17,8 @@ public class ProcessKill {
 		this.pID = pID;
 	}
 
-	public void kill() throws IOException {
-		
+	public boolean kill() throws IOException {
+
 		String processList = "";
 		String[] commandList = { "powershell.exe", "-Command", "Get-Process" };
 		ProcessBuilder processBuilder = new ProcessBuilder(commandList);
@@ -28,14 +28,16 @@ public class ProcessKill {
 		while ((processLine = processBuffer.readLine()) != null) {
 			processList += processLine + '\n';
 		}
-		
-		if(processList.contains(this.pID)) {
+
+		if (processList.contains(this.pID)) {
 			String commandLine = "taskkill /PID " + this.pID;
-		    Process p = Runtime.getRuntime().exec(commandLine);
-		    BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		    this.res = input.readLine();
+			Process p = Runtime.getRuntime().exec(commandLine);
+			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			this.res = input.readLine();
+			return true;
 		} else {
 			this.res = "Wrong pID!";
+			return false;
 		}
 	}
 
