@@ -1,6 +1,5 @@
 package Application;
 
-
 public class CheckThread extends Thread {
 	private ClientConnection cc;
 	private volatile boolean exit = false;
@@ -12,7 +11,7 @@ public class CheckThread extends Thread {
 	public void stopCheckThread() {
 		this.exit = true;
 	}
-	
+
 	public boolean isRunning() {
 		return !this.exit;
 	}
@@ -26,8 +25,11 @@ public class CheckThread extends Thread {
 					break;
 				}
 			}
-			// End Connection passively
-			cc.endConnection(true);
+			///////////////////////////////
+			if (exit == false) {
+				// End Connection passively
+				cc.endConnection(true);
+			}
 		} catch (Exception e) {
 			System.out.println("e CheckThread");
 		}
