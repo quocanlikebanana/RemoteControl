@@ -5,6 +5,7 @@ import javax.swing.JInternalFrame;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import Process.ListProcess;
 import Process.ProcessKill;
@@ -15,6 +16,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+
+import HandleListResponse.ListToStringArray;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,6 +30,7 @@ public class ProcessTab extends JInternalFrame {
 	private int port;
 	private JTextField killPID;
 	private JTextField startName;
+	private JTable processTable;
 	
 	public ProcessTab(String host,int port) {
 		this.host = host;
@@ -43,8 +48,6 @@ public class ProcessTab extends JInternalFrame {
 		
 		JTextPane textPane = new JTextPane();
 		 
-		
-		
 		JButton btnStartProcess = new JButton("START PROCESS");
 		btnStartProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -71,9 +74,18 @@ public class ProcessTab extends JInternalFrame {
 					ListProcess listProcess = new ListProcess(host, port);
 					listProcess.sendRequest();
 					String list = (String) listProcess.getResonseData();
-					listProcessPane.setViewportView(textPane);
-					textPane.setText(list);
-					textPane.setEditable(false);
+					ListToStringArray listToStringArray = new ListToStringArray(list);
+ 
+					JScrollPane listProcessJScrollPane = new JScrollPane();
+					listProcessJScrollPane.setBounds(10, 105, 610, 370);
+					getContentPane().add(listProcessJScrollPane);
+
+					String[][] data = listToStringArray.res_list;
+					// Column Names
+					String[] columnNames = { "Name", "Id", "Threads Count" };
+
+					processTable = new JTable(data, columnNames);
+					listProcessJScrollPane.setViewportView(processTable);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				} catch (ClassNotFoundException e1) {

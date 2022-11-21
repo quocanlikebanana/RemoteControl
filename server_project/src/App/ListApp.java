@@ -16,7 +16,7 @@ public class ListApp {
 
 	public void setListApp() throws IOException {
 		String[] commandList = { "powershell.exe", "-Command",
-				"get-process | where-object {$_.mainwindowhandle -ne 0} | select-object name, id" };
+				"get-process | where-object {$_.mainwindowhandle -ne 0} | Select-Object Name, ID, @{Name='ThreadCount';Expression ={$_.Threads.Count}} | Sort-Object -Property ThreadCount -Descending" };
 		ProcessBuilder processBuilder = new ProcessBuilder(commandList);
 		Process list = processBuilder.start();
 		BufferedReader processBuffer = new BufferedReader(new InputStreamReader(list.getInputStream()));
