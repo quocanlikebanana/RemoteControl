@@ -13,6 +13,8 @@ import ScreenCapture.ScreenCapture;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -31,7 +33,7 @@ public class ScreenCaptureTab extends JInternalFrame {
 	private String host = "";
 	private int port;
 	private BufferedImage bImage2 = null;
-
+	public String path;
 	public ScreenCaptureTab(String host, int port) {
 		this.host = host;
 		this.port = port;
@@ -48,7 +50,7 @@ public class ScreenCaptureTab extends JInternalFrame {
 //		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Admin\\Desktop\\GIT_DOAN\\dev\\RemoteControl\\client_project\\output.jpg"));
 		getContentPane().add(lblNewLabel);
 
-		JButton btnScreenCap = new JButton("Screnn Capture");
+		JButton btnScreenCap = new JButton("Screen Capture");
 		btnScreenCap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -59,7 +61,7 @@ public class ScreenCaptureTab extends JInternalFrame {
 					ByteArrayInputStream bis = new ByteArrayInputStream(data);
 					bImage2 = ImageIO.read(bis);
 					lblNewLabel.setIcon(new ImageIcon(bImage2.getScaledInstance(527, 254, 100)));
-					ImageIO.write(bImage2, "jpg", new File("output.jpg"));
+					ImageIO.write(bImage2, "png", new File("output.png"));
 
 				} catch (Exception e2) {
 					// TODO: handle exception
@@ -75,17 +77,26 @@ public class ScreenCaptureTab extends JInternalFrame {
 		JButton btnDownload = new JButton("Download");
 		btnDownload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					ImageIO.write(bImage2, "jpg", new File("output.jpg"));
-					JOptionPane.showMessageDialog(null, "Success!", "",
-							JOptionPane.INFORMATION_MESSAGE);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Fail!", "",
-							JOptionPane.INFORMATION_MESSAGE);
-				}
-
+				
+					
+					JFrame parentFrame = new JFrame();
+					 
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setDialogTitle("Specify a file to save");   
+					 
+					int userSelection = fileChooser.showSaveDialog(parentFrame);
+					 
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+					    File fileToSave = fileChooser.getSelectedFile();
+					   path = fileToSave.getAbsolutePath()+".png";	
+					    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+					    try {
+							ImageIO.write(bImage2, "png",new File(path) );
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
 			}
 		});
 
