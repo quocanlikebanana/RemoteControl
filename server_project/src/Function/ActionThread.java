@@ -35,9 +35,7 @@ public class ActionThread extends Thread {
 	public void run() {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-			ObjectInputStream ois = new ObjectInputStream(inputStream); // throws in first run, need to
-											// anylize what happened in
-											// first run
+			ObjectInputStream ois = new ObjectInputStream(inputStream); 
 
 			String request = (String) ois.readObject();
 			String[] request_elements = request.split(" ");
@@ -98,8 +96,7 @@ public class ActionThread extends Thread {
 				main.removeFromIpList(fromIP);
 
 			} else if (request.equals("CHECK")) {
-				oos.writeObject("FINE");
-				oos.flush();
+				// Do nothing
 			}
 			oos.close();
 			ois.close();

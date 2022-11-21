@@ -107,6 +107,7 @@ public class Server_GUI {
 		frmServer.getContentPane().add(closeBtn);
 		closeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		closeBtn.addActionListener(new ActionListener() {
+			// CLOSE all Connection 
 			public void actionPerformed(ActionEvent e) {
 				openBtn.setVisible(true);
 				openBtn.setEnabled(true);

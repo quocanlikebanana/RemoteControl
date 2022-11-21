@@ -19,12 +19,13 @@ public class CheckThread extends Thread {
 	public void run() {
 		try {
 			while (exit == false) {
+				Thread.sleep(1000);
 				if (cc.checkConnection() == false) {
 					// Connection loss passive
+					cc.endConnection(true);
 					
 					break;
 				}
-				Thread.sleep(1000);
 			}
 		} catch (Exception e) {
 			e.getStackTrace();

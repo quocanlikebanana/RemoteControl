@@ -58,10 +58,11 @@ public class Client_Application {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					host = inputIP.getText();
-					ClientConnection start = new ClientConnection(host, port);
-					if (start.startConnection()) {
+					ClientConnection cc = new ClientConnection(host, port);
+					if (cc.checkStartConnection() == true) {
 						Main_Window mainWindow = new Main_Window(host,port);
 						mainWindow.setVisible(true);
+						cc.getMain_Window(mainWindow);
 						frame.dispose();
 					}
 				} catch (Exception e2) {
