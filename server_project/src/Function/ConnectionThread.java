@@ -1,17 +1,17 @@
 package Function;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import Application.Server_GUI;
 
-
-/** 
+/**
  * Single Thread
-*/
+ */
 
 public class ConnectionThread extends Thread {
-	
+
 	private ServerSocket server = null;
 	private Socket client = null;
 
@@ -39,7 +39,7 @@ public class ConnectionThread extends Thread {
 		try {
 			this.server.close();
 		} catch (Exception e) {
-			System.out.println("e");
+			System.out.println("e stopConnection");
 		}
 	}
 
@@ -55,9 +55,12 @@ public class ConnectionThread extends Thread {
 				ActionThread woker = new ActionThread(client, main);
 				woker.start();
 			}
+		} catch (IOException e) {
+			System.out.println("ioe run ConnectionThread - normal");
 		} catch (Exception e) {
-			System.out.println("e");
+			System.out.println("e run ConnectionThread");
 		}
+
 	}
 
 }

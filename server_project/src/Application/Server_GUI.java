@@ -51,7 +51,7 @@ public class Server_GUI {
 					Server_GUI window = new Server_GUI();
 					window.frmServer.setVisible(true);
 				} catch (Exception e) {
-					System.out.println("e");
+					System.out.println("e main server");
 				}
 			}
 		});
@@ -115,6 +115,7 @@ public class Server_GUI {
 				closeBtn.setEnabled(false);
 
 				con.stopConnection();
+				ipListModel.clear();
 			}
 		});
 		closeBtn.setForeground(Color.WHITE);
@@ -194,11 +195,9 @@ public class Server_GUI {
 	public void removeFromIpList(String ip) {
 		int id = this.ipListModel.indexOf(ip);
 		if (id == -1) {
-			System.out.println("4.1");
 			return;
 		}
 		this.ipListModel.remove(id);
-		System.out.println("4.2");
 	}
 
 	public void actionRecorded(String ip, String act) {

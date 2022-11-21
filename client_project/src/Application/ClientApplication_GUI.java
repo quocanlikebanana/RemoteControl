@@ -55,11 +55,7 @@ public class ClientApplication_GUI extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				try {
-					cc.endConnection(false);
-				} catch (IOException e1) {
-					System.out.println("ioe");
-				}
+				cc.endConnection(false);
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,9 +70,6 @@ public class ClientApplication_GUI extends JFrame {
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 
-//		ProcessThread processList = new ProcessThread(host, 8080, contentPane);
-
-		// Panel
 		Header.setBounds(0, 0, 786, 51);
 		Header.setBackground(new Color(114, 110, 255));
 		contentPane.add(Header);
@@ -95,6 +88,7 @@ public class ClientApplication_GUI extends JFrame {
 
 		// Button
 		JButton btnShutDown = new JButton("Shut Down");
+		btnShutDown.setEnabled(false);
 		btnShutDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ShutDown shutDown = new ShutDown(host, port);
@@ -205,9 +199,6 @@ public class ClientApplication_GUI extends JFrame {
 		btnProcess.setBackground(new Color(55, 70, 91));
 		btnProcess.setSize(getPreferredSize().width, 100);
 		nav.add(btnProcess);
-
-//		contentPane.add(textPane);
-
 	}
 
 	public void returnToConnectionTab() {

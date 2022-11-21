@@ -14,9 +14,9 @@ import javax.swing.JTextField;
 
 public class Client_GUI {
 	private JTextField inputIP;
-	public  static Client_GUI window = null;
+	public static Client_GUI window = null;
 	private JButton btnConnection;
-	
+
 	public JFrame frame;
 	public String host;
 	public final int port = 8080;
@@ -28,26 +28,26 @@ public class Client_GUI {
 					window = new Client_GUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
-					System.out.println("e");
+					System.out.println("e main client");
 				}
 			}
 		});
 	}
-	
+
 	public Client_GUI() {
 		initialize();
 	}
-	
+
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 600, 400);
 		frame.getContentPane().setLayout(null);
-		
+
 		inputIP = new JTextField();
 		inputIP.setBounds(103, 92, 319, 40);
 		frame.getContentPane().add(inputIP);
 		inputIP.setColumns(10);
-		
+
 		btnConnection = new JButton("Connect");
 		btnConnection.setBounds(453, 85, 85, 52);
 		frame.getContentPane().add(btnConnection);
@@ -60,15 +60,17 @@ public class Client_GUI {
 					host = inputIP.getText();
 					ClientConnection cc = new ClientConnection(host, port);
 					if (cc.checkStartConnection() == true) {
-						ClientApplication_GUI mainWindow = new ClientApplication_GUI(host,port, cc);
+						ClientApplication_GUI mainWindow = new ClientApplication_GUI(host, port,
+								cc);
 						mainWindow.setVisible(true);
 						frame.dispose();
+					} else {
+						host = "";
+						JOptionPane.showMessageDialog(null, "error", "InfoBox: ",
+								JOptionPane.INFORMATION_MESSAGE);
 					}
-				} catch (Exception e2) {
-					// TODO: handle exception
-					System.out.println("e");
-					host = "";
-					JOptionPane.showMessageDialog(null, "error", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e1) {
+					System.out.println("e btnConnection");
 				}
 			}
 		});

@@ -12,21 +12,24 @@ public class CheckThread extends Thread {
 	public void stopCheckThread() {
 		this.exit = true;
 	}
+	
+	public boolean isRunning() {
+		return !this.exit;
+	}
 
 	@Override
 	public void run() {
 		try {
 			while (exit == false) {
-				Thread.sleep(1000);
+				Thread.sleep(10);
 				if (cc.checkConnection() == false) {
-					// End Connection passively
-					cc.endConnection(true);
-					
 					break;
 				}
 			}
+			// End Connection passively
+			cc.endConnection(true);
 		} catch (Exception e) {
-			System.out.println("e");
+			System.out.println("e CheckThread");
 		}
 	}
 }

@@ -27,7 +27,7 @@ public class ActionThread extends Thread {
 			this.main = main;
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("e");
+			System.out.println("e ActionThread");
 		}
 
 	}
@@ -101,15 +101,15 @@ public class ActionThread extends Thread {
 			oos.close();
 			ois.close();
 		} catch (StreamCorruptedException sce) {
-			System.out.println("sce");
+			System.out.println("sce run ActionThread");
 		} catch (IOException ioe) {
-			System.out.println("ioe");
+			System.out.println("ioe run ActionThread");
 		} catch (SecurityException se) {
-			System.out.println("se");
+			System.out.println("se run ActionThread");
 		} catch (NullPointerException npe) {
-			System.out.println("npe");
+			System.out.println("npe run ActionThread");
 		} catch (Exception e) {
-			System.out.println("e");
+			System.out.println("e run ActionThread");
 		}
 
 	}
