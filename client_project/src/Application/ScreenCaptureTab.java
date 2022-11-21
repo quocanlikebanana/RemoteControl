@@ -5,7 +5,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-import Process.ListProcess;
+import App.ListApp;
 import Process.ProcessKill;
 import Process.ProcessStart;
 import ScreenCapture.ScreenCapture;

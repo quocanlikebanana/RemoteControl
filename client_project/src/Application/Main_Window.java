@@ -180,12 +180,33 @@ public class Main_Window extends JFrame {
 		btnProcess.setSize(getPreferredSize().width,100);
 		nav.add(btnProcess);
 		
+		JButton btnApplication = new JButton("Application");
+		btnApplication.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ApplicationTab applicationTab = new ApplicationTab(host,port);
+				desktopPane.removeAll();
+				desktopPane.add(applicationTab);
+			}
+		});
+		btnApplication.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnApplication.setBackground(new Color(112, 235, 237));
+				btnApplication.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnApplication.setBackground(nav.getBackground());
+				btnApplication.setForeground(Color.white);
+			}
+		});
+		btnApplication.setForeground(Color.WHITE);
+		btnApplication.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnApplication.setBorder(null);
+		btnApplication.setBackground(new Color(55, 70, 91));
+		nav.add(btnApplication);
 		
-	
 //		contentPane.add(textPane);
-		
-		
-		
 		
 	}
 }
