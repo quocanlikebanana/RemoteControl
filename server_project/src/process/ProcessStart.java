@@ -53,5 +53,6 @@ public class ProcessStart {
 
 	public void send_result() throws IOException {
 		oos.writeObject(this.res);
+		oos.flush();
 	}
 }

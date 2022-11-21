@@ -27,5 +27,6 @@ public class ListProcess {
 
 	public void sendListProcess() throws IOException {
 		oos.writeObject(this.listProcess);
+		oos.flush();
 	}
 }

