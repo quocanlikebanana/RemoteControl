@@ -20,6 +20,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.JDesktopPane;
 import javax.swing.SwingConstants;
 import ShutDown.ShutDown;
+import Tabs.KeyLoggerTab;
+import Tabs.ProcessTab;
+import Tabs.ScreenCaptureTab;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class Main_Window extends JFrame {
 
@@ -27,11 +34,29 @@ public class Main_Window extends JFrame {
 	private int port;
 	private JPanel contentPane;
 	private JPanel Header = new JPanel();
-	private JPanel curPanel = null;
-	private int pageIndex = -1;
+	private ClientConnection cc;
+	private Main_Window self = this;
+	
 	private final JDesktopPane desktopPane = new JDesktopPane();
 
-	public Main_Window(final String host, int port) {
+	public Main_Window(final String host, int port, ClientConnection cc) {
+		this.port = port;
+		this.host = host;
+		this.cc = cc;
+		
+		this.cc.setMain_Window(self);
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					System.out.println("1");
+					cc.endConnection(false);
+				} catch (IOException e1) {
+					e1.getStackTrace();
+				}
+			}
+		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBackground(new Color(51, 51, 51));
 		setResizable(false);
@@ -179,9 +204,9 @@ public class Main_Window extends JFrame {
 //		contentPane.add(textPane);
 
 	}
-	
+
 	public void returnToConnectionTab() {
-		Client_Application clApp = new Client_Application();
+		Client_GUI clApp = new Client_GUI();
 		clApp.frame.setVisible(true);
 		this.dispose();
 	}

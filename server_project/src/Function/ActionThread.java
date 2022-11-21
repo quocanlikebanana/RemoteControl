@@ -36,6 +36,7 @@ public class ActionThread extends Thread {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(outputStream);
 			ObjectInputStream ois = new ObjectInputStream(inputStream); 
+			System.out.println("3");
 
 			String request = (String) ois.readObject();
 			String[] request_elements = request.split(" ");
@@ -93,9 +94,12 @@ public class ActionThread extends Thread {
 				}
 				main.actionRecorded(fromIP, record);
 			} else if (request.equals("END")) {
+				System.out.println("3.1");
+				System.out.println(fromIP);
 				main.removeFromIpList(fromIP);
 
 			} else if (request.equals("CHECK")) {
+				System.out.println("2.1");
 				// Do nothing
 			}
 			oos.close();

@@ -1,7 +1,5 @@
 package Application;
 
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 
 public class CheckThread extends Thread {
 	private ClientConnection cc;
@@ -21,7 +19,8 @@ public class CheckThread extends Thread {
 			while (exit == false) {
 				Thread.sleep(1000);
 				if (cc.checkConnection() == false) {
-					// Connection loss passive
+					// End Connection passive
+					System.out.println("5");
 					cc.endConnection(true);
 					
 					break;

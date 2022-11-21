@@ -1,4 +1,4 @@
-package Application;
+package Tabs;
 
 import javax.swing.JInternalFrame;
 import java.awt.Color;

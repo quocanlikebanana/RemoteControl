@@ -193,9 +193,12 @@ public class Server_GUI {
 
 	public void removeFromIpList(String ip) {
 		int id = this.ipListModel.indexOf(ip);
-		if (id == -1)
+		if (id == -1) {
+			System.out.println("4.1");
 			return;
+		}
 		this.ipListModel.remove(id);
+		System.out.println("4.2");
 	}
 
 	public void actionRecorded(String ip, String act) {

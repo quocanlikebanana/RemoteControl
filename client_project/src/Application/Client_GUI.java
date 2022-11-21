@@ -12,9 +12,9 @@ import java.net.Socket;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
-public class Client_Application {
+public class Client_GUI {
 	private JTextField inputIP;
-	public  static Client_Application window = null;
+	public  static Client_GUI window = null;
 	private JButton btnConnection;
 	
 	public JFrame frame;
@@ -25,7 +25,7 @@ public class Client_Application {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					window = new Client_Application();
+					window = new Client_GUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +34,7 @@ public class Client_Application {
 		});
 	}
 	
-	public Client_Application() {
+	public Client_GUI() {
 		initialize();
 	}
 	
@@ -60,9 +60,8 @@ public class Client_Application {
 					host = inputIP.getText();
 					ClientConnection cc = new ClientConnection(host, port);
 					if (cc.checkStartConnection() == true) {
-						Main_Window mainWindow = new Main_Window(host,port);
+						Main_Window mainWindow = new Main_Window(host,port, cc);
 						mainWindow.setVisible(true);
-						cc.getMain_Window(mainWindow);
 						frame.dispose();
 					}
 				} catch (Exception e2) {

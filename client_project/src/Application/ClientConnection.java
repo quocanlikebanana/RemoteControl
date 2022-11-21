@@ -7,7 +7,6 @@ import java.net.Socket;
 public class ClientConnection {
 	private String host;
 	private int port;
-	private ObjectOutputStream oos;
 	private Main_Window main;
 
 	public ClientConnection(String host, int port) {
@@ -15,7 +14,7 @@ public class ClientConnection {
 		this.port = port;
 	}
 
-	public void getMain_Window(Main_Window mw) {
+	public void setMain_Window(Main_Window mw) {
 		this.main = mw;
 	}
 	
@@ -28,36 +27,38 @@ public class ClientConnection {
 		client.close();
 
 		// Check connection constantly
-		new CheckThread(this);
-
+		CheckThread cth = new CheckThread(this);
+		cth.start();
 		return res;
 	}
+	
 	public boolean checkConnection() throws IOException {
 		Socket client = new Socket(this.host, this.port);
-		this.oos = new ObjectOutputStream(client.getOutputStream());
+		ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
 		oos.writeObject("CHECK");
 		oos.flush();
 		boolean res = client.isConnected();
 		client.close();
 		return res;
 	}
-	public boolean endConnection(boolean passive) throws IOException {
+	
+	public void endConnection(boolean passive) throws IOException {
 		// Intend to end
 		if (passive == false) {
+			System.out.println("2.1");
 			Socket client = new Socket(this.host, this.port);
-			this.oos = new ObjectOutputStream(client.getOutputStream());
+			ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
 			oos.writeObject("END");
 			oos.flush();
-			boolean res = client.isConnected();
+			System.out.println("2.1");
 			client.close();
-			return res;
 		}
 		// Forced to end
 		else {
 			//
+			System.out.println("2.2");
 		}
 		this.main.returnToConnectionTab();
-		return false;
 	}
 
 }
