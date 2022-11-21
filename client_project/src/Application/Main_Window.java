@@ -20,6 +20,9 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JDesktopPane;
+import javax.swing.SwingConstants;
+import ShutDown.ShutDown;
+
 
 public class Main_Window extends JFrame {
 
@@ -69,24 +72,32 @@ public class Main_Window extends JFrame {
 		
 		
 		//Button		
-		JButton btnNewButton_1 = new JButton("New button");
-		btnNewButton_1.addMouseListener(new MouseAdapter() {
+		JButton btnShutDown = new JButton("Shut Down");
+		btnShutDown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShutDown shutDown = new ShutDown(host, port);
+				shutDown.sendRequest();
+				String data = (String) shutDown.getResponseData();
+				// Dung de thoat chuong trinh
+			}
+		});
+		btnShutDown.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnNewButton_1.setBackground(new Color(112, 235, 237));
-				btnNewButton_1.setForeground(Color.black);
+				btnShutDown.setBackground(new Color(112, 235, 237));
+				btnShutDown.setForeground(Color.black);
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnNewButton_1.setBackground(nav.getBackground());
-				btnNewButton_1.setForeground(Color.white);
+				btnShutDown.setBackground(nav.getBackground());
+				btnShutDown.setForeground(Color.white);
 			}
 		});
-		btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnNewButton_1.setForeground(Color.WHITE);
-		btnNewButton_1.setBackground(new Color(55,70,91));
-		btnNewButton_1.setBorder(null);
-		nav.add(btnNewButton_1);
+		btnShutDown.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnShutDown.setForeground(Color.WHITE);
+		btnShutDown.setBackground(new Color(55,70,91));
+		btnShutDown.setBorder(null);
+		nav.add(btnShutDown);
 		
 		JButton btnScreenCapture = new JButton("Screen Capture");
 		btnScreenCapture.addActionListener(new ActionListener() {
