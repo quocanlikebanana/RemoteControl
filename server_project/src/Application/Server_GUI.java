@@ -51,7 +51,7 @@ public class Server_GUI {
 					Server_GUI window = new Server_GUI();
 					window.frmServer.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("e");
 				}
 			}
 		});

@@ -28,32 +28,37 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
-public class Main_Window extends JFrame {
+public class ClientApplication_GUI extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String host = "";
 	private int port;
 	private JPanel contentPane;
 	private JPanel Header = new JPanel();
 	private ClientConnection cc;
-	private Main_Window self = this;
+	private ClientApplication_GUI self = this;
 	
 	private final JDesktopPane desktopPane = new JDesktopPane();
 
-	public Main_Window(final String host, int port, ClientConnection cc) {
+	public ClientApplication_GUI(final String host, int port, ClientConnection cc) {
 		this.port = port;
 		this.host = host;
 		this.cc = cc;
 		
 		this.cc.setMain_Window(self);
+		this.cc.checkConnectionConstantly();
 		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				try {
-					System.out.println("1");
 					cc.endConnection(false);
 				} catch (IOException e1) {
-					e1.getStackTrace();
+					System.out.println("ioe");
 				}
 			}
 		});

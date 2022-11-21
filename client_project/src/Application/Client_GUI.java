@@ -28,7 +28,7 @@ public class Client_GUI {
 					window = new Client_GUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("e");
 				}
 			}
 		});
@@ -60,12 +60,13 @@ public class Client_GUI {
 					host = inputIP.getText();
 					ClientConnection cc = new ClientConnection(host, port);
 					if (cc.checkStartConnection() == true) {
-						Main_Window mainWindow = new Main_Window(host,port, cc);
+						ClientApplication_GUI mainWindow = new ClientApplication_GUI(host,port, cc);
 						mainWindow.setVisible(true);
 						frame.dispose();
 					}
 				} catch (Exception e2) {
 					// TODO: handle exception
+					System.out.println("e");
 					host = "";
 					JOptionPane.showMessageDialog(null, "error", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
 				}

@@ -9,7 +9,7 @@ public class CheckThread extends Thread {
 		this.cc = cc;
 	}
 
-	public void stopClientProcess() {
+	public void stopCheckThread() {
 		this.exit = true;
 	}
 
@@ -19,15 +19,14 @@ public class CheckThread extends Thread {
 			while (exit == false) {
 				Thread.sleep(1000);
 				if (cc.checkConnection() == false) {
-					// End Connection passive
-					System.out.println("5");
+					// End Connection passively
 					cc.endConnection(true);
 					
 					break;
 				}
 			}
 		} catch (Exception e) {
-			e.getStackTrace();
+			System.out.println("e");
 		}
 	}
 }

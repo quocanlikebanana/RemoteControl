@@ -39,7 +39,7 @@ public class ConnectionThread extends Thread {
 		try {
 			this.server.close();
 		} catch (Exception e) {
-			e.getStackTrace();
+			System.out.println("e");
 		}
 	}
 
@@ -56,7 +56,7 @@ public class ConnectionThread extends Thread {
 				woker.start();
 			}
 		} catch (Exception e) {
-			e.getStackTrace();
+			System.out.println("e");
 		}
 	}
 
