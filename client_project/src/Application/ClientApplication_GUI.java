@@ -20,6 +20,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JDesktopPane;
 import javax.swing.SwingConstants;
 import ShutDown.ShutDown;
+import Tabs.ApplicationTab;
 import Tabs.KeyLoggerTab;
 import Tabs.ProcessTab;
 import Tabs.ScreenCaptureTab;
@@ -34,24 +35,24 @@ public class ClientApplication_GUI extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private String host = "";
 	private int port;
 	private JPanel contentPane;
 	private JPanel Header = new JPanel();
 	private ClientConnection cc;
 	private ClientApplication_GUI self = this;
-	
+
 	private final JDesktopPane desktopPane = new JDesktopPane();
 
 	public ClientApplication_GUI(final String host, int port, ClientConnection cc) {
 		this.port = port;
 		this.host = host;
 		this.cc = cc;
-		
+
 		this.cc.setMain_Window(self);
 		this.cc.checkConnectionConstantly();
-		
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -88,7 +89,6 @@ public class ClientApplication_GUI extends JFrame {
 
 		// Button
 		JButton btnShutDown = new JButton("Shut Down");
-		btnShutDown.setEnabled(false);
 		btnShutDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ShutDown shutDown = new ShutDown(host, port);
@@ -199,6 +199,36 @@ public class ClientApplication_GUI extends JFrame {
 		btnProcess.setBackground(new Color(55, 70, 91));
 		btnProcess.setSize(getPreferredSize().width, 100);
 		nav.add(btnProcess);
+
+		JButton btnApplication = new JButton("Application");
+		btnApplication.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ApplicationTab applicationTab = new ApplicationTab(host, port);
+				desktopPane.removeAll();
+				desktopPane.add(applicationTab);
+			}
+		});
+		btnApplication.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnApplication.setBackground(new Color(112, 235, 237));
+				btnApplication.setForeground(Color.black);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnApplication.setBackground(nav.getBackground());
+				btnApplication.setForeground(Color.white);
+			}
+		});
+		btnApplication.setForeground(Color.WHITE);
+		btnApplication.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnApplication.setBorder(null);
+		btnApplication.setBackground(new Color(55, 70, 91));
+		nav.add(btnApplication);
+
+//		contentPane.add(textPane);
+
 	}
 
 	public void returnToConnectionTab() {

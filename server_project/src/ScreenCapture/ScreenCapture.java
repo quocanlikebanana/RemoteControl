@@ -27,8 +27,9 @@ public class ScreenCapture {
 		Rectangle rectangle = new Rectangle(dimension);
 		Robot robot = new Robot();
 		BufferedImage screen = robot.createScreenCapture(rectangle);
+
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ImageIO.write(screen, "jpg", bos);
+		ImageIO.write(screen, "png", bos);
 
 		data = bos.toByteArray();
 		if (data == null) {

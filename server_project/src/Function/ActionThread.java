@@ -2,6 +2,9 @@ package Function;
 
 import java.net.*;
 
+import App.AppKill;
+import App.AppStart;
+import App.ListApp;
 import Application.Server_GUI;
 import KeyLogger.KeyLogger;
 import ScreenCapture.ScreenCapture;
@@ -50,6 +53,13 @@ public class ActionThread extends Thread {
 
 				this.record = "Get list of process";
 				main.actionRecorded(fromIP, record);
+			} else if (request.equals("GET_APPLICATION_LIST")) {
+				ListApp listApplication = new ListApp(oos);
+				listApplication.setListApp();
+				listApplication.sendListProcess();
+
+				this.record = "Get list of application";
+				main.actionRecorded(fromIP, record);
 			} else if (request_elements[0].equals("KILL_PROCESS")) {
 				ProcessKill processKill = new ProcessKill(oos, request_elements[1]);
 				boolean res = processKill.kill();
@@ -62,12 +72,38 @@ public class ActionThread extends Thread {
 					this.record += "pID not found";
 				}
 				main.actionRecorded(fromIP, record);
+			} else if (request_elements[0].equals("KILL_APPLICATION")) {
+				AppKill appKill = new AppKill(oos, request_elements[1]);
+				boolean res = appKill.kill();
+				appKill.send_result();
+
+				this.record = "Kill application: ";
+				if (res == true) {
+					this.record += request_elements[1];
+				} else {
+					this.record += "pID not found";
+				}
+				main.actionRecorded(fromIP, record);
 			} else if (request_elements[0].equals("START_PROCESS")) {
+
 				ProcessStart processStart = new ProcessStart(oos, request_elements[1]);
 				boolean res = processStart.start_file();
 				processStart.send_result();
 
 				this.record = "Start process: ";
+				if (res == true) {
+					this.record += request_elements[1];
+				} else {
+					this.record += "name not found";
+				}
+				main.actionRecorded(fromIP, record);
+			} else if (request_elements[0].equals("START_APPLICATION")) {
+
+				AppStart appStart = new AppStart(oos, request_elements[1]);
+				boolean res = appStart.start_file();
+				appStart.send_result();
+
+				this.record = "Start application: ";
 				if (res == true) {
 					this.record += request_elements[1];
 				} else {
