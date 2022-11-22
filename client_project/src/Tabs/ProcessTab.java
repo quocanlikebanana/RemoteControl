@@ -42,11 +42,6 @@ public class ProcessTab extends JInternalFrame {
 		setBounds(100, 100, 600, 400);
 		getContentPane().setLayout(null);
 		setVisible(true);
-		JScrollPane listProcessPane = new JScrollPane();
-		listProcessPane.setBounds(10, 124, 580, 239);
-		getContentPane().add(listProcessPane);
-		
-		JTextPane textPane = new JTextPane();
 		 
 		JButton btnStartProcess = new JButton("START PROCESS");
 		btnStartProcess.addActionListener(new ActionListener() {
@@ -85,6 +80,7 @@ public class ProcessTab extends JInternalFrame {
 					String[] columnNames = { "Name", "Id", "Threads Count" };
 
 					processTable = new JTable(data, columnNames);
+					processTable.setEnabled(false);
 					listProcessJScrollPane.setViewportView(processTable);
 				} catch (IOException e1) {
 					e1.printStackTrace();
