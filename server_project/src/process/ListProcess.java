@@ -16,7 +16,7 @@ public class ListProcess {
 
 	public void set_listProcess() throws IOException {
 		String[] commandList = { "powershell.exe", "-Command",
-				"Get-Process | Select-Object Name, ID, @{Name='ThreadCount';Expression ={$_.Threads.Count}} | Sort-Object -Property ThreadCount -Descending" };
+				"Get-Process | Select-Object Name, ID, @{Name='ThreadCount';Expression ={$_.Threads.Count}}" };
 		ProcessBuilder processBuilder = new ProcessBuilder(commandList);
 		Process list = processBuilder.start();
 		BufferedReader processBuffer = new BufferedReader(new InputStreamReader(list.getInputStream()));

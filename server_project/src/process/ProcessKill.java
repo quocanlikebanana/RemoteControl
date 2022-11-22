@@ -19,26 +19,26 @@ public class ProcessKill {
 
 	public boolean kill() throws IOException {
 
-		String processList = "";
-		String[] commandList = { "powershell.exe", "-Command", "Get-Process" };
-		ProcessBuilder processBuilder = new ProcessBuilder(commandList);
-		Process list = processBuilder.start();
-		BufferedReader processBuffer = new BufferedReader(new InputStreamReader(list.getInputStream()));
-		String processLine = "";
-		while ((processLine = processBuffer.readLine()) != null) {
-			processList += processLine + '\n';
-		}
+		ListProcess listProcess = new ListProcess(oos);
+		listProcess.set_listProcess();
 
-		if (processList.contains(this.pID)) {
-			String commandLine = "taskkill /PID " + this.pID;
+		boolean is_exist = listProcess.listProcess.contains(this.pID);
+		if (is_exist == true) {
+			String commandLine = "taskkill /PID " + this.pID + " /F /T";
 			Process p = Runtime.getRuntime().exec(commandLine);
 			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			this.res = input.readLine();
+			String res_line = "";
+			while ((res_line = input.readLine()) != null) {
+				this.res += res_line;
+			}
 			return true;
-		} else {
-			this.res = "Wrong pID!";
-			return false;
+		} else if (is_exist == false) {
+			this.res = "Process not found!";
+		} else if (this.res == null || this.res.length() == 0) {
+			this.res = "The process could not be killed!";
 		}
+		return false;
+		// xu ly th xoa file he thong khong duoc return false
 	}
 
 	public void send_result() throws IOException {

@@ -14,7 +14,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
 
 import App.AppKill;
 import App.AppStart;
@@ -43,8 +42,6 @@ public class ApplicationTab extends JInternalFrame {
 		setBounds(100, 100, 600, 400);
 		getContentPane().setLayout(null);
 		setVisible(true);
-
-		// JTextPane textPane = new JTextPane();
 
 		JButton btnStartApplication = new JButton("START APPLICATION");
 		btnStartApplication.addActionListener(new ActionListener() {

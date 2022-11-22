@@ -1,6 +1,5 @@
 package Application;
 
-
 import javax.swing.JInternalFrame;
 import java.awt.Color;
 import javax.swing.JFrame;
@@ -15,7 +14,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
 
 import HandleListResponse.ListToStringArray;
 
@@ -31,8 +29,8 @@ public class ProcessTab extends JInternalFrame {
 	private JTextField killPID;
 	private JTextField startName;
 	private JTable processTable;
-	
-	public ProcessTab(String host,int port) {
+
+	public ProcessTab(String host, int port) {
 		this.host = host;
 		this.port = port;
 		setBorder(null);
@@ -42,23 +40,18 @@ public class ProcessTab extends JInternalFrame {
 		setBounds(100, 100, 600, 400);
 		getContentPane().setLayout(null);
 		setVisible(true);
-		JScrollPane listProcessPane = new JScrollPane();
-		listProcessPane.setBounds(10, 124, 580, 239);
-		getContentPane().add(listProcessPane);
-		
-		JTextPane textPane = new JTextPane();
-		 
+
 		JButton btnStartProcess = new JButton("START PROCESS");
 		btnStartProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String status = "Please innput Process Name...";
-					if(!startName.getText().isEmpty()) {
+					if (!startName.getText().isEmpty()) {
 						ProcessStart processStart = new ProcessStart(host, port);
 						processStart.sendRequest(startName.getText());
 						status = (String) processStart.getResponseData();
 					}
-					JOptionPane.showMessageDialog(null, status , "" , JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, status, "", JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e2) {
 					// TODO: handle exception
 				}
@@ -66,7 +59,7 @@ public class ProcessTab extends JInternalFrame {
 		});
 		btnStartProcess.setBounds(10, 74, 160, 21);
 		getContentPane().add(btnStartProcess);
-		
+
 		JButton btnGetProcess = new JButton("GET PROCESS");
 		btnGetProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -75,7 +68,7 @@ public class ProcessTab extends JInternalFrame {
 					listProcess.sendRequest();
 					String list = (String) listProcess.getResonseData();
 					ListToStringArray listToStringArray = new ListToStringArray(list);
- 
+
 					JScrollPane listProcessJScrollPane = new JScrollPane();
 					listProcessJScrollPane.setBounds(10, 105, 610, 370);
 					getContentPane().add(listProcessJScrollPane);
@@ -95,48 +88,46 @@ public class ProcessTab extends JInternalFrame {
 		});
 		btnGetProcess.setBounds(10, 12, 160, 21);
 		getContentPane().add(btnGetProcess);
-		
+
 		JButton btnKillProcess = new JButton("KILL PROCESS");
 		btnKillProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String status = "Please input pID...";
-					if(!killPID.getText().isEmpty()) {
+					if (!killPID.getText().isEmpty()) {
 						ProcessKill processKill = new ProcessKill(host, port);
 						processKill.sendRequest(killPID.getText());
 						status = (String) processKill.getResponseData();
 					}
-					JOptionPane.showMessageDialog(null, status , "" , JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, status, "", JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e2) {
 					e2.getStackTrace();
 				}
-				
+
 			}
 		});
 		btnKillProcess.setBounds(10, 43, 160, 21);
 		getContentPane().add(btnKillProcess);
-		
+
 		killPID = new JTextField();
 		killPID.setBounds(342, 43, 208, 19);
 		getContentPane().add(killPID);
 		killPID.setColumns(10);
-		
+
 		startName = new JTextField();
 		startName.setBounds(342, 74, 208, 19);
 		getContentPane().add(startName);
 		startName.setColumns(10);
-		
+
 		JLabel lblNewLabel = new JLabel("Kill pID:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel.setBounds(207, 41, 77, 21);
 		getContentPane().add(lblNewLabel);
-		
+
 		JLabel lblStartName = new JLabel("Process Name:");
 		lblStartName.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblStartName.setBounds(207, 72, 114, 21);
 		getContentPane().add(lblStartName);
-		
-	
 
 	}
 }
