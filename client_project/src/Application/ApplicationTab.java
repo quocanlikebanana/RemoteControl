@@ -30,7 +30,8 @@ public class ApplicationTab extends JInternalFrame {
 	private int port;
 	private JTextField killPID;
 	private JTextField startName;
-	private JTable processTable;
+	private JScrollPane listApplicationJScrollPane = null;
+	private JTable processTable = null;
 
 	public ApplicationTab(String host, int port) {
 		this.host = host;
@@ -71,11 +72,7 @@ public class ApplicationTab extends JInternalFrame {
 					String list = (String) listApplication.getResonseData();
 					ListToStringArray listToStringArray = new ListToStringArray(list);
 
-//					listAppPane.setViewportView(textPane);
-//					textPane.setText(list);
-//					textPane.setEditable(false);
-
-					JScrollPane listApplicationJScrollPane = new JScrollPane();
+					listApplicationJScrollPane = new JScrollPane();
 					listApplicationJScrollPane.setBounds(10, 105, 610, 370);
 					getContentPane().add(listApplicationJScrollPane);
 

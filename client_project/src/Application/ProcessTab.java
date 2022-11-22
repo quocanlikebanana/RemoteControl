@@ -28,7 +28,8 @@ public class ProcessTab extends JInternalFrame {
 	private int port;
 	private JTextField killPID;
 	private JTextField startName;
-	private JTable processTable;
+	private JScrollPane listProcessJScrollPane = null;
+	private JTable processTable = null;
 
 	public ProcessTab(String host, int port) {
 		this.host = host;
@@ -69,7 +70,7 @@ public class ProcessTab extends JInternalFrame {
 					String list = (String) listProcess.getResonseData();
 					ListToStringArray listToStringArray = new ListToStringArray(list);
 
-					JScrollPane listProcessJScrollPane = new JScrollPane();
+					listProcessJScrollPane = new JScrollPane();
 					listProcessJScrollPane.setBounds(10, 105, 610, 370);
 					getContentPane().add(listProcessJScrollPane);
 
