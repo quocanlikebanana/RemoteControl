@@ -1,13 +1,12 @@
 package Application;
 
-
 import javax.swing.JInternalFrame;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
-import Process.ListProcess;
+import App.ListApp;
+import HandleListResponse.ListToStringArray;
 import Process.ProcessKill;
 import Process.ProcessStart;
 
@@ -17,22 +16,24 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 
-import HandleListResponse.ListToStringArray;
+import App.AppKill;
+import App.AppStart;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import javax.swing.JTable;
 
-public class ProcessTab extends JInternalFrame {
+public class ApplicationTab extends JInternalFrame {
 	private String host = "";
 	private int port;
 	private JTextField killPID;
 	private JTextField startName;
 	private JTable processTable;
-	
-	public ProcessTab(String host,int port) {
+
+	public ApplicationTab(String host, int port) {
 		this.host = host;
 		this.port = port;
 		setBorder(null);
@@ -42,50 +43,51 @@ public class ProcessTab extends JInternalFrame {
 		setBounds(100, 100, 600, 400);
 		getContentPane().setLayout(null);
 		setVisible(true);
-		JScrollPane listProcessPane = new JScrollPane();
-		listProcessPane.setBounds(10, 124, 580, 239);
-		getContentPane().add(listProcessPane);
-		
-		JTextPane textPane = new JTextPane();
-		 
-		JButton btnStartProcess = new JButton("START PROCESS");
-		btnStartProcess.addActionListener(new ActionListener() {
+
+		// JTextPane textPane = new JTextPane();
+
+		JButton btnStartApplication = new JButton("START APPLICATION");
+		btnStartApplication.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String status = "Please innput Process Name...";
-					if(!startName.getText().isEmpty()) {
-						ProcessStart processStart = new ProcessStart(host, port);
-						processStart.sendRequest(startName.getText());
-						status = (String) processStart.getResponseData();
+					String status = "Please innput Application Name...";
+					if (!startName.getText().isEmpty()) {
+						AppStart appStart = new AppStart(host, port);
+						appStart.sendRequest(startName.getText());
+						status = (String) appStart.getResponseData();
 					}
-					JOptionPane.showMessageDialog(null, status , "" , JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, status, "", JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e2) {
 					// TODO: handle exception
 				}
 			}
 		});
-		btnStartProcess.setBounds(10, 74, 160, 21);
-		getContentPane().add(btnStartProcess);
-		
-		JButton btnGetProcess = new JButton("GET PROCESS");
-		btnGetProcess.addActionListener(new ActionListener() {
+		btnStartApplication.setBounds(10, 74, 160, 21);
+		getContentPane().add(btnStartApplication);
+
+		JButton btnGetApplication = new JButton("GET APPLICATION");
+		btnGetApplication.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ListProcess listProcess = new ListProcess(host, port);
-					listProcess.sendRequest();
-					String list = (String) listProcess.getResonseData();
+					ListApp listApplication = new ListApp(host, port);
+					listApplication.sendRequest();
+					String list = (String) listApplication.getResonseData();
 					ListToStringArray listToStringArray = new ListToStringArray(list);
- 
-					JScrollPane listProcessJScrollPane = new JScrollPane();
-					listProcessJScrollPane.setBounds(10, 105, 610, 370);
-					getContentPane().add(listProcessJScrollPane);
+
+//					listAppPane.setViewportView(textPane);
+//					textPane.setText(list);
+//					textPane.setEditable(false);
+
+					JScrollPane listApplicationJScrollPane = new JScrollPane();
+					listApplicationJScrollPane.setBounds(10, 105, 610, 370);
+					getContentPane().add(listApplicationJScrollPane);
 
 					String[][] data = listToStringArray.res_list;
 					// Column Names
 					String[] columnNames = { "Name", "Id", "Threads Count" };
 
 					processTable = new JTable(data, columnNames);
-					listProcessJScrollPane.setViewportView(processTable);
+					listApplicationJScrollPane.setViewportView(processTable);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				} catch (ClassNotFoundException e1) {
@@ -93,50 +95,48 @@ public class ProcessTab extends JInternalFrame {
 				}
 			}
 		});
-		btnGetProcess.setBounds(10, 12, 160, 21);
-		getContentPane().add(btnGetProcess);
-		
-		JButton btnKillProcess = new JButton("KILL PROCESS");
-		btnKillProcess.addActionListener(new ActionListener() {
+		btnGetApplication.setBounds(10, 12, 160, 21);
+		getContentPane().add(btnGetApplication);
+
+		JButton btnKillApplication = new JButton("KILL APPLICATION");
+		btnKillApplication.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String status = "Please input pID...";
-					if(!killPID.getText().isEmpty()) {
-						ProcessKill processKill = new ProcessKill(host, port);
-						processKill.sendRequest(killPID.getText());
-						status = (String) processKill.getResponseData();
+					if (!killPID.getText().isEmpty()) {
+						AppKill appKill = new AppKill(host, port);
+						appKill.sendRequest(killPID.getText());
+						status = (String) appKill.getResponseData();
 					}
-					JOptionPane.showMessageDialog(null, status , "" , JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, status, "", JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e2) {
 					e2.getStackTrace();
 				}
-				
+
 			}
 		});
-		btnKillProcess.setBounds(10, 43, 160, 21);
-		getContentPane().add(btnKillProcess);
-		
+		btnKillApplication.setBounds(10, 43, 160, 21);
+		getContentPane().add(btnKillApplication);
+
 		killPID = new JTextField();
 		killPID.setBounds(342, 43, 208, 19);
 		getContentPane().add(killPID);
 		killPID.setColumns(10);
-		
+
 		startName = new JTextField();
 		startName.setBounds(342, 74, 208, 19);
 		getContentPane().add(startName);
 		startName.setColumns(10);
-		
+
 		JLabel lblNewLabel = new JLabel("Kill pID:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel.setBounds(207, 41, 77, 21);
 		getContentPane().add(lblNewLabel);
-		
-		JLabel lblStartName = new JLabel("Process Name:");
+
+		JLabel lblStartName = new JLabel("Application Name:");
 		lblStartName.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblStartName.setBounds(207, 72, 114, 21);
 		getContentPane().add(lblStartName);
-		
-	
 
 	}
 }
