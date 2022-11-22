@@ -23,21 +23,13 @@ public class ScreenCapture {
 	}
 
 	public boolean get_Screenshot() throws IOException, AWTException {
-		String path = "D:\\sc.jpg";
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		Rectangle rectangle = new Rectangle(dimension);
 		Robot robot = new Robot();
 		BufferedImage screen = robot.createScreenCapture(rectangle);
 
-		try {
-			ImageIO.write(screen, "jpg", new File(path));
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-		BufferedImage bImage = ImageIO.read(new File("D:\\sc.jpg"));
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ImageIO.write(bImage, "jpg", bos);
+		ImageIO.write(screen, "png", bos);
 
 		data = bos.toByteArray();
 		if (data == null) {
@@ -48,5 +40,6 @@ public class ScreenCapture {
 
 	public void send_ScreenShot() throws IOException {
 		oos.writeObject(data);
+		oos.flush();
 	}
 }

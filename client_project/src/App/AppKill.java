@@ -6,8 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import javax.swing.JOptionPane;
-import Protocols.protocol;
 
 public class AppKill {
 	private Socket socket =  null;
