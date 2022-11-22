@@ -80,7 +80,6 @@ public class ProcessTab extends JInternalFrame {
 					String[] columnNames = { "Name", "Id", "Threads Count" };
 
 					processTable = new JTable(data, columnNames);
-					processTable.setEnabled(false);
 					listProcessJScrollPane.setViewportView(processTable);
 				} catch (IOException e1) {
 					e1.printStackTrace();
