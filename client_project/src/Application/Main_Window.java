@@ -24,6 +24,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JDesktopPane;
 import javax.swing.SwingConstants;
 import ShutDown.ShutDown;
+import Tabs.KeyLoggerTab;
+import Tabs.ScreenCaptureTab;
 
 public class Main_Window extends JFrame {
 
