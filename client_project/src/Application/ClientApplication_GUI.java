@@ -42,6 +42,12 @@ public class ClientApplication_GUI extends JFrame {
 	private JPanel Header = new JPanel();
 	private ClientConnection cc;
 	private ClientApplication_GUI self = this;
+	
+	private JButton btnApplication;
+	private JButton btnProcess;
+	private JButton btnShutDown;
+	private JButton btnKeyLogger;
+	private JButton btnScreenCapture;
 
 	private final JDesktopPane desktopPane = new JDesktopPane();
 
@@ -88,7 +94,7 @@ public class ClientApplication_GUI extends JFrame {
 		contentPane.add(desktopPane);
 
 		// Button
-		JButton btnShutDown = new JButton("Shut Down");
+		btnShutDown = new JButton("Shut Down");
 		btnShutDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ShutDown shutDown = new ShutDown(host, port);
@@ -116,7 +122,7 @@ public class ClientApplication_GUI extends JFrame {
 		btnShutDown.setBorder(null);
 		nav.add(btnShutDown);
 
-		JButton btnScreenCapture = new JButton("Screen Capture");
+		btnScreenCapture = new JButton("Screen Capture");
 		btnScreenCapture.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ScreenCaptureTab screeCaptureTab = new ScreenCaptureTab(host, port);
@@ -143,7 +149,7 @@ public class ClientApplication_GUI extends JFrame {
 		btnScreenCapture.setBorder(null);
 		nav.add(btnScreenCapture);
 
-		JButton btnKeyLogger = new JButton("Key Logger");
+		btnKeyLogger = new JButton("Key Logger");
 		btnKeyLogger.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				KeyLoggerTab keyLoggerTab = new KeyLoggerTab(host, port);
@@ -171,7 +177,7 @@ public class ClientApplication_GUI extends JFrame {
 		btnKeyLogger.setBackground(new Color(55, 70, 91));
 		nav.add(btnKeyLogger);
 
-		JButton btnProcess = new JButton("Process");
+		btnProcess = new JButton("Process");
 		btnProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ProcessTab processTab = new ProcessTab(host, port);
@@ -200,7 +206,7 @@ public class ClientApplication_GUI extends JFrame {
 		btnProcess.setSize(getPreferredSize().width, 100);
 		nav.add(btnProcess);
 
-		JButton btnApplication = new JButton("Application");
+		btnApplication = new JButton("Application");
 		btnApplication.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ApplicationTab applicationTab = new ApplicationTab(host, port);
@@ -229,8 +235,18 @@ public class ClientApplication_GUI extends JFrame {
 
 //		contentPane.add(textPane);
 
+		postInitialize();
 	}
 
+	
+	public void postInitialize() {
+		btnProcess.setFocusPainted(false);
+		btnScreenCapture.setFocusPainted(false);
+		btnShutDown.setFocusPainted(false);
+		btnApplication.setFocusPainted(false);
+		btnKeyLogger.setFocusPainted(false);
+	}
+	
 	public void returnToConnectionTab() {
 		Client_GUI clApp = new Client_GUI();
 		clApp.frame.setVisible(true);

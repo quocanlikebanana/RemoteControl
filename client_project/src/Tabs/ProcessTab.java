@@ -84,7 +84,18 @@ public class ProcessTab extends JInternalFrame {
 					// Column Names
 					String[] columnNames = { "Name", "Id", "Threads Count" };
 
-					processTable = new JTable(data, columnNames);
+					processTable = new JTable(data, columnNames) {
+						/**
+						 * 
+						 */
+						private static final long serialVersionUID = 1L;
+
+						public boolean isCellEditable(int rowIndex, int mColIndex) {
+							processTable.setFocusable(false);
+							return false;
+						}
+					};
+					
 					listProcessJScrollPane.setViewportView(processTable);
 				} catch (IOException e1) {
 					e1.printStackTrace();
