@@ -31,12 +31,14 @@ public class ProcessKill {
 			while ((res_line = input.readLine()) != null) {
 				this.res += res_line;
 			}
-			return true;
-		} else if (is_exist == false) {
-			this.res = "Process not found!";
-		} else if (this.res == null || this.res.length() == 0) {
-			this.res = "The process could not be killed!";
+			if (this.res == null || this.res.length() == 0) {
+				this.res = "The process could not be killed!";
+				return false;
+			} else {
+				return true;
+			}
 		}
+		this.res = "Process not found!";
 		return false;
 		// xu ly th xoa file he thong khong duoc return false
 	}
