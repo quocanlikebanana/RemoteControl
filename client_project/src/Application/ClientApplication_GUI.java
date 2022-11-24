@@ -3,8 +3,11 @@ package Application;
 //import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 //import Function.ProcessClass;
 
@@ -14,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -97,10 +101,20 @@ public class ClientApplication_GUI extends JFrame {
 		btnShutDown = new JButton("Shut Down");
 		btnShutDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ShutDown shutDown = new ShutDown(host, port);
-				shutDown.sendRequest();
-				String data = (String) shutDown.getResponseData();
-				// Dung de thoat chuong trinh
+
+				ImageIcon logo = new ImageIcon("logo.png");
+				Image tmpImage = logo.getImage().getScaledInstance(120, 200, java.awt.Image.SCALE_SMOOTH);
+				logo = new ImageIcon(tmpImage);
+
+				int choice = JOptionPane.showConfirmDialog(btnShutDown, "Server will be shutdown immediately?", "Shutdown Confirm", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, logo);
+
+				if (choice == JOptionPane.YES_OPTION) {
+					ShutDown shutDown = new ShutDown(host, port);
+					shutDown.sendRequest();
+					String data = (String) shutDown.getResponseData();
+					// Dung de thoat chuong trinh
+				}
 			}
 		});
 		btnShutDown.addMouseListener(new MouseAdapter() {

@@ -24,11 +24,16 @@ public class ListToStringArray {
 
 				listLine[i] = removeBlankSpace(listLine[i]);
 
-				String[] elements = listLine[i].split(" ", 3);
+				int posSecondSpaceInt = listLine[i].lastIndexOf(" ");
+				this.res_list[cur_row][2] = listLine[i].substring(posSecondSpaceInt + 1);
+				listLine[i] = listLine[i].substring(0, posSecondSpaceInt);
+				
+				int posFirstSpaceInt = listLine[i].lastIndexOf(" ");
+				this.res_list[cur_row][1] = listLine[i].substring(posFirstSpaceInt + 1);
+				listLine[i] = listLine[i].substring(0, posFirstSpaceInt);
 
-				this.res_list[cur_row][0] = elements[0];
-				this.res_list[cur_row][1] = elements[1];
-				this.res_list[cur_row][2] = elements[2];
+				this.res_list[cur_row][0] = listLine[i];
+
 				cur_row++;
 			}
 		}
