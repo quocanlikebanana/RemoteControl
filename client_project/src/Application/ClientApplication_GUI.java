@@ -72,6 +72,9 @@ public class ClientApplication_GUI extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBackground(new Color(51, 51, 51));
 		setResizable(false);
+		setTitle("RemoteControl_Client");
+		ImageIcon icon = new ImageIcon("Images/art.png");
+		setIconImage(icon.getImage());
 		this.host = host;
 		this.port = port;
 		setBounds(100, 100, 800, 600);

@@ -15,6 +15,7 @@ import Function.ConnectionThread;
 
 import java.awt.SystemColor;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import java.awt.event.ActionListener;
@@ -80,6 +81,8 @@ public class Server_GUI {
 		frmServer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmServer.getContentPane().setLayout(null);
 		frmServer.getContentPane().setLayout(null);
+		ImageIcon icon = new ImageIcon("Images/art.png");
+		frmServer.setIconImage(icon.getImage());
 
 		openBtn = new JButton("Open Server");
 		openBtn.setBounds(10, 10, 130, 40);

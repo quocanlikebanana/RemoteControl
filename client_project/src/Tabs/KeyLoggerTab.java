@@ -20,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Panel;
+
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -45,7 +47,9 @@ public class KeyLoggerTab extends JInternalFrame {
 		setBounds(100, 100, 600, 400);
 		getContentPane().setLayout(null);
 		textPane.setBounds(23, 93, 567, 525);
-		
+		JPanel panel = new JPanel();
+		panel.setBounds(510, 25, 47, 44);
+		getContentPane().add(panel);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(23, 106, 567, 257);
@@ -58,6 +62,7 @@ public class KeyLoggerTab extends JInternalFrame {
 				if(!isRecord) {
 					KeyLoggerStart keyLoggerStart = new KeyLoggerStart(host, port);
 					keyLoggerStart.sendRequest();
+					panel.setBackground(Color.green);
 					isRecord = true;
 				}
 			}
@@ -72,6 +77,7 @@ public class KeyLoggerTab extends JInternalFrame {
 					textPane.setText("");
 					KeyLoggerStop keyLoggerStop = new KeyLoggerStop(host, port);
 					keyLoggerStop.sendRequest();
+					panel.setBackground(Color.black);
 					String data = (String) keyLoggerStop.getResponseData();
 					textPane.setText(data);
 					isRecord = false;
@@ -82,9 +88,7 @@ public class KeyLoggerTab extends JInternalFrame {
 		btnStop.setBounds(213, 25, 152, 44);
 		getContentPane().add(btnStop);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(510, 25, 47, 44);
-		getContentPane().add(panel);
+		
 		
 		JLabel lblNewLabel = new JLabel("Record");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));

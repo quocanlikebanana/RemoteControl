@@ -184,6 +184,8 @@ public class Client_GUI {
 		Right.add(lblNewLabel);
 		frame.setLocationRelativeTo(null);
 		frame.setTitle("RemoteControl_Client");
+		ImageIcon icon = new ImageIcon("Images/art.png");
+		frame.setIconImage(icon.getImage());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
