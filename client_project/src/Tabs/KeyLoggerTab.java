@@ -42,15 +42,17 @@ public class KeyLoggerTab extends JInternalFrame {
 		this.port = port;
 		setBorder(null);
 		setResizable(true);
+		JButton btnDelete = new JButton("DELETE");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setBackground(new Color(255, 255, 255));
 		setBounds(100, 100, 600, 400);
 		getContentPane().setLayout(null);
 		textPane.setBounds(23, 93, 567, 525);
+		textPane.setEditable(false);
 		JPanel panel = new JPanel();
 		panel.setBounds(510, 25, 47, 44);
 		getContentPane().add(panel);
-		
+		btnDelete.setEnabled(false);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(23, 106, 567, 257);
 		scrollPane.setViewportView(textPane);
@@ -64,6 +66,7 @@ public class KeyLoggerTab extends JInternalFrame {
 					keyLoggerStart.sendRequest();
 					panel.setBackground(Color.green);
 					isRecord = true;
+					btnDelete.setEnabled(false);
 				}
 			}
 		});
@@ -77,11 +80,11 @@ public class KeyLoggerTab extends JInternalFrame {
 					textPane.setText("");
 					KeyLoggerStop keyLoggerStop = new KeyLoggerStop(host, port);
 					keyLoggerStop.sendRequest();
-					panel.setBackground(Color.black);
+					panel.setBackground(Color.red);
 					String data = (String) keyLoggerStop.getResponseData();
 					textPane.setText(data);
 					isRecord = false;
-					
+					btnDelete.setEnabled(true);
 				}
 			}
 		});
@@ -96,16 +99,17 @@ public class KeyLoggerTab extends JInternalFrame {
 		lblNewLabel.setBounds(512, 10, 45, 13);
 		getContentPane().add(lblNewLabel);
 		
-		JButton btnNewButton = new JButton("DELETE");
-		btnNewButton.addActionListener(new ActionListener() {
+		
+		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				KeyLoggerDelete keyLoggerDelete = new KeyLoggerDelete(host, port);
 				keyLoggerDelete.sendRequest();
 				textPane.setText("");
+				btnDelete.setEnabled(false);
 			}
 		});
-		btnNewButton.setBounds(405, 25, 95, 44);
-		getContentPane().add(btnNewButton);
+		btnDelete.setBounds(405, 25, 95, 44);
+		getContentPane().add(btnDelete);
 		setVisible(true);
 		
 	}
