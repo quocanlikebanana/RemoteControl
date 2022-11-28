@@ -28,6 +28,7 @@ import Tabs.ApplicationTab;
 import Tabs.KeyLoggerTab;
 import Tabs.ProcessTab;
 import Tabs.ScreenCaptureTab;
+import Tabs.logoTab;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -99,6 +100,9 @@ public class ClientApplication_GUI extends JFrame {
 		desktopPane.setLayout(new BorderLayout(0, 0));
 		desktopPane.setDragMode(ABORT);
 		contentPane.add(desktopPane);
+		logoTab LogoTab = new logoTab();
+		desktopPane.add(LogoTab);
+		
 
 		// Button
 		btnShutDown = new JButton("Shut Down");

