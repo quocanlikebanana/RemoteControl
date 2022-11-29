@@ -25,7 +25,6 @@ public class ListApp {
 			this.listApp += processLine + '\n';
 		}
 	}
-
 	public void sendListProcess() throws IOException {
 		oos.writeObject(this.listApp);
 	}

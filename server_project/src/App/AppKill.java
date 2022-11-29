@@ -18,10 +18,8 @@ public class AppKill {
 	}
 
 	public boolean kill() throws IOException {
-
 		ListApp listApplication = new ListApp(oos);
 		listApplication.setListApp();
-
 		if (listApplication.listApp.contains(this.pID)) {
 			String commandLine = "taskkill /PID " + this.pID;
 			Process p = Runtime.getRuntime().exec(commandLine);

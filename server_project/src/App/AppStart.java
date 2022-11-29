@@ -17,30 +17,45 @@ public class AppStart {
 		// TODO Auto-generated constructor stub
 		this.oos = oos;
 		this.file_name = file_name;
-
 		set_file_path();
 	}
 
 	public void set_file_path() throws IOException {
-		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "dir \"\\" + this.file_name + "\"" + " /s");
-		pb.directory(new File("C:"));
-		Process process = pb.start();
-		BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		String response_line;
-		while ((response_line = br.readLine()) != null) {
-			if (response_line.startsWith(" Directory") == true) {
-				this.is_exist = true;
-				String[] token = response_line.split(" ", 4);
-				this.file_path = token[3];
-				break;
-			}
+		
+		ProcessBuilder appProcessBuilder = new ProcessBuilder("powershell","/c","Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName | Format-Table –AutoSiz");
+		Process appProcess = appProcessBuilder.start();
+		BufferedReader appBf = new BufferedReader(new InputStreamReader(appProcess.getInputStream()));
+		String appList = "";
+		String appLine = "";
+		while((appLine = appBf.readLine())!= null) {
+			appList += appLine + '\n';
 		}
-		br.close();
+		appBf.close();
+		
+		
+		if(appList.toLowerCase().contains(this.file_name.toLowerCase())) {
+			
+			if(!this.file_name.endsWith(".exe")) this.file_name += ".exe";
+			ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "dir \"\\" + this.file_name  + "\"" + " /s");
+			pb.directory(new File("C:"));
+			Process process = pb.start();
+			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String response_line;
+			while ((response_line = br.readLine()) != null) {
+				if (response_line.startsWith(" Directory") == true) {
+					this.is_exist = true;
+					String[] token = response_line.split(" ", 4);
+					this.file_path = token[3];
+					break;
+				}
+			}
+			br.close();
+		}
 	}
 
 	public boolean start_file() throws IOException {
 		if (this.is_exist == true) {
-			ProcessBuilder pb = new ProcessBuilder("cmd", "/c", this.file_name);
+			ProcessBuilder pb = new ProcessBuilder("cmd", "/c", this.file_name  );
 			pb.directory(new File(this.file_path));
 			pb.start();
 			this.res = "Start Application Successfully!";
