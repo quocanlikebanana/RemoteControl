@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class ClientConnection {
 	private String host;
@@ -44,12 +45,18 @@ public class ClientConnection {
 	public boolean checkConnection() {
 		try {
 			Socket client = new Socket(this.host, this.port);
+			if (!client.isConnected()) {
+				throw new UnknownHostException();
+			}
 			ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
 			ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
 			oos.writeObject("CHECK");
 			oos.flush();
 			client.close();
 			return true;
+		} catch (UnknownHostException e) {
+			System.out.println("uhe checkConnection - normal");
+			return false;
 		} catch (IOException e) {
 			System.out.println("ioe checkConnection - normal");
 			return false;

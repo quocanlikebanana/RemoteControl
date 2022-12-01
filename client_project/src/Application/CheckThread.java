@@ -20,7 +20,7 @@ public class CheckThread extends Thread {
 	public void run() {
 		try {
 			while (exit == false) {
-				Thread.sleep(10);
+				Thread.sleep(1000);
 				if (cc.checkConnection() == false) {
 					break;
 				}
