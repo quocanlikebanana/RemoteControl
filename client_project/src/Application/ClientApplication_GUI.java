@@ -120,7 +120,11 @@ public class ClientApplication_GUI extends JFrame {
 					ShutDown shutDown = new ShutDown(host, port);
 					shutDown.sendRequest();
 					String data = (String) shutDown.getResponseData();
-					// Dung de thoat chuong trinh
+					
+					if(data.equals("END")) {
+						JOptionPane.showMessageDialog(null, "Server is close", "InfoBox: ",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 			}
 		});
